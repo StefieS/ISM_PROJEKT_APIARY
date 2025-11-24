@@ -1,2 +1,2 @@
 # ISM_PROJEKT_APIARY
-Simulating an apiary to figure out which method is more effective.
+Simulating an apiary to figure out whether onsite or offsite extraction is more effective.
