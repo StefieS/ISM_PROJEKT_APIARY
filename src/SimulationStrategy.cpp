@@ -1,4 +1,4 @@
-#include "../src/SimulationStrategy.hpp"
+#include "../inc/SimulationStrategy.hpp"
 
 
 // TODO: Define all shared functions

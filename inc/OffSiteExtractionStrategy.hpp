@@ -3,7 +3,7 @@
 
 #include "SimulationStrategy.hpp"
 
-constexpr int OFF_TIME_EXAMPLE 50
+constexpr int OFF_TIME_EXAMPLE = 50;
 // TODO : fill in all time uses
 
 

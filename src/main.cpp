@@ -2,9 +2,9 @@
 #include <memory>
 #include <string>
 
-#include "ApiarySim.hpp"
-#include "OnSiteExtractionStrategy.hpp"
-#include "OffSiteExtractionStrategy.hpp"
+#include "../inc/ApiarySim.hpp"
+#include "../inc/OnSiteExtractionStrategy.hpp"
+#include "../inc/OffSiteExtractionStrategy.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
