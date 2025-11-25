@@ -1,0 +1,22 @@
+# --- Compiled object files ---
+*.o
+*.obj
+*.lo
+*.la
+*.lai
+*.slo
+
+# --- Generated files ---
+*.log
+*.tmp
+*.cache
+
+# --- Build directories ---
+/build/
+/build-debug/
+/build-release/
+/dist/
+/bin/
+/lib/
+
+.gitignore
