@@ -10,7 +10,7 @@ constexpr int OFF_TIME_EXAMPLE = 50;
 class OffSiteExtractionStrategy : public SimulationStrategy {
 
 public:
-    
+    //TODO : CONSTRUCTOR FOR TIME
     void run() override;
 
 };

@@ -10,6 +10,7 @@ constexpr int ON_TIME_EXAMPLE = 50;
 class OnSiteExtractionStrategy : public SimulationStrategy {
 
 public:
+//TODO : CONSTRUCTOR FOR TIME
 
     void run() override;
 

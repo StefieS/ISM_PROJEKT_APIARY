@@ -12,13 +12,13 @@ inline constexpr int FRAMES_PER_HIVE = 7;
 class SimulationStrategy {
     
 public:
-
+    //TODO : CONSTRUCTOR FOR TIME
     virtual ~SimulationStrategy() = default;
 
     virtual void run() = 0;
 
 protected:
-
+    std::unordered_map<std::string, int> Time;
     // TODO : declare shared strategy methods here 
 };
 
