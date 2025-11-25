@@ -1,0 +1,8 @@
+#ifndef __BASE_COMPONENTS
+#define __BASE_COMPONENTS
+
+int HIVES = 40;
+int FRAMES_PER_HIVE = 7;
+
+
+#endif // __BASE_COMPONENTS

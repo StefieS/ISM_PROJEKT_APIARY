@@ -4,7 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
-#include "SimulationStrategy.hpp"
+#include "strategies/SimulationStrategy.hpp"
 
 
 class ApiarySim {

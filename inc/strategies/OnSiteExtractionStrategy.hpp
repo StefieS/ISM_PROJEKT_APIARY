@@ -2,7 +2,7 @@
 #define __ON_SITE_EXTRACTION_STRATEGY
 
 #include "SimulationStrategy.hpp"
-#include "OnSiteConstants.hpp"
+#include "../constants/OnSiteConstants.hpp"
 
 
 class OnSiteExtractionStrategy : public SimulationStrategy {

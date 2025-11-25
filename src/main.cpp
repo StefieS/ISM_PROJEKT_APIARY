@@ -3,8 +3,8 @@
 #include <string>
 
 #include "../inc/ApiarySim.hpp"
-#include "../inc/OnSiteExtractionStrategy.hpp"
-#include "../inc/OffSiteExtractionStrategy.hpp"
+#include "../inc/strategies/OnSiteExtractionStrategy.hpp"
+#include "../inc/strategies/OffSiteExtractionStrategy.hpp"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {

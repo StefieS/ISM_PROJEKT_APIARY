@@ -1,0 +1,4 @@
+#ifndef __ON_SITE_COMPONENTS
+#define __ON_SITE_COMPONENTS
+
+#endif // __ON_SITE_COMPONENTS
