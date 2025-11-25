@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <string>
 #include "../constants/BaseConstants.hpp"
+#include "../simlib_components/BaseComponents.hpp"
 
 // Description: Abstract interface for simulation strategies.
 class SimulationStrategy {

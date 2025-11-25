@@ -23,6 +23,9 @@ public:
 class TakingOutFrames : public Process {
 public:
     void Behavior() override;
+    TakingOutFrames() {
+        Activate();
+    }
 };
 
 class OpeningHive : public Process {

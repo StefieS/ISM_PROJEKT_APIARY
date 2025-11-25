@@ -50,4 +50,5 @@ void OpeningHive::Behavior() {
     Wait(Uniform(TIME_TO_OPEN_HIVE - 5, TIME_TO_OPEN_HIVE + 5));
     Release(hiveBeekeeper);
     vprint("OpeningHive completed");
+    new TakingOutFrames();
 }
