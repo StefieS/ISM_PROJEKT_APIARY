@@ -2,15 +2,12 @@
 #define __ON_SITE_EXTRACTION_STRATEGY
 
 #include "SimulationStrategy.hpp"
-
-constexpr int ON_TIME_EXAMPLE = 50;
-// TODO : fill in all time uses
+#include "OnSiteConstants.hpp"
 
 
 class OnSiteExtractionStrategy : public SimulationStrategy {
 
 public:
-//TODO : CONSTRUCTOR FOR TIME
 
     void run() override;
 
