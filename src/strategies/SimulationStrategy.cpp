@@ -2,3 +2,7 @@
 
 
 // TODO: Define all shared functions
+
+void SimulationStrategy::beeHivesProcess() {
+    
+}
