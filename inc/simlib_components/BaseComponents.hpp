@@ -63,6 +63,25 @@ public:
 };
 
 
+class ExtractorRunning : public Process {
+public:
+     void Behavior() override;
+}; 
+
+class LoadingFromShelfToExtractor : public Process {
+public:
+     void Behavior() override;
+}; 
+
+class UnloadExtractor : public Process {
+public:
+     void Behavior() override;
+};
+
+class GetAndLoadUncappedFrames : public Process {
+public:
+     void Behavior() override;
+};
 
 
 #endif // __BASE_COMPONENTS

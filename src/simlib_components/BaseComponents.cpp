@@ -3,6 +3,22 @@
 #include "../../inc/utils.hpp"
 using namespace BaseConstants;
 
+void ExtractorRunning::Behavior() {
+
+}
+
+void LoadingFromShelfToExtractor::Behavior() {
+
+}
+
+void UnloadExtractor::Behavior() {
+
+}
+
+void GetAndLoadUncappedFrames::Behavior() {
+
+}
+
 void ReturningEmptyFramesToHive::Behavior() {
     while (true) {
         if (!Transport->transportAvailableForUnload(Location::Hives)) {
