@@ -4,23 +4,30 @@
 using namespace BaseConstants;
 
 void ReturningEmptyFramesToHive::Behavior() {
-    vprint("ReturningEmptyFramesToHive activated");
-    for (int i = 0; i < framesToReturn; ++i) {
-        Seize(*hiveBeekeeper, 3);
-        vprint("Returning empty frame " + std::to_string(i + 1) + " of " + std::to_string(framesToReturn));
-        Wait(Normal(TIME_TO_PUT_THE_FRAME_BACK, 2));
-        Transport->unloadFromTransport();
-        Release(*hiveBeekeeper);
-        vprint("Returned empty frame " + std::to_string(i + 1));
+    while (true) {
+        if (!Transport->transportAvailableForUnload(Location::Hives)) {
+            Passivate(); // wait until transport comes back from shed
+            continue;
+        }
+    
+        vprint("ReturningEmptyFramesToHive activated");
+        for (int i = 0; i < framesToReturn; ++i) {
+            Seize(*hiveBeekeeper, 3);
+            vprint("Returning empty frame " + std::to_string(i + 1) + " of " + std::to_string(framesToReturn));
+            Wait(Normal(TIME_TO_PUT_THE_FRAME_BACK, 2));
+            Transport->unloadFromTransport();
+            Release(*hiveBeekeeper);
+            vprint("Returned empty frame " + std::to_string(i + 1));
+        }
+        vprint("ReturningEmptyFramesToHive completed");
     }
-    vprint("ReturningEmptyFramesToHive completed");
 }
 
 void LoadingFromStandToTransport::Behavior() {
 
     while (true) {
         if (stand == 0 || !Transport->transportAvailableForLoad(Location::Hives)) {
-            Passivate();
+            Passivate(); // wait until there is something on the stand and transport is available
             continue;
         }
 
