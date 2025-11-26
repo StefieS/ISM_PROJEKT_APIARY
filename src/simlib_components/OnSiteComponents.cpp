@@ -20,7 +20,11 @@ void OneTrolleyGetter::unloadFromTransport() {
     Trolley.Leave(1);
     if (this->Trolley.Empty()) {
         status = TransportStatus::ReadyToLoad;
-        // todo signal that transport is ready to be loaded
+        // if position == hives
+        // LoadingFromStandToTransport activate
+        // else if position == shed
+        // LoadingFromShelfToTransport activate
+
     }
 }
 

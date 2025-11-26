@@ -17,16 +17,24 @@ void ReturningEmptyFramesToHive::Behavior() {
 }
 
 void LoadingFromStandToTransport::Behavior() {
-    vprint("LoadingFromStandToTransport activated");
-    Seize(*hiveBeekeeper, 2);
-    vprint("LoadingFromStandToTransport started");
-    Wait(Uniform(TIME_FROM_STAND_TO_TRANSPORT - 5, TIME_FROM_STAND_TO_TRANSPORT + 5));
 
-    stand--;
-    Transport->loadIntoTransport(this);
+    while (true) {
+        if (stand == 0 || !Transport->transportAvailableForLoad(Location::Hives)) {
+            Passivate();
+            continue;
+        }
 
-    vprint("LoadingFromStandToTransport completed");
-    Release(*hiveBeekeeper);
+        vprint("LoadingFromStandToTransport activated");
+        Seize(*hiveBeekeeper, 2);
+        vprint("LoadingFromStandToTransport started");
+        Wait(Uniform(TIME_FROM_STAND_TO_TRANSPORT - 5, TIME_FROM_STAND_TO_TRANSPORT + 5));
+
+        stand--;
+        Transport->loadIntoTransport(this);
+
+        vprint("LoadingFromStandToTransport completed");
+        Release(*hiveBeekeeper);
+    }
 }
 
 void TakingOutFrames::Behavior() {
@@ -43,6 +51,7 @@ void TakingOutFrames::Behavior() {
             vprint("Loaded frame into transport");
         } else {
             stand++;
+            // LoadingFromStandToTransport activate
             vprint("No transport available, placing frame on stand");
 
         }
