@@ -5,9 +5,28 @@
 #include <memory>
 
 inline int hives_to_open = 40;
-inline std::unique_ptr<Store> Transport;
+class ITransportGetter;
+inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 
+enum class Location {
+    Hives,
+    Shed
+};
+
+enum class TransportStatus {
+    ReadyToLoad,
+    WaitingForTransport,
+    ReadyToUnload
+};
+
+class ITransportGetter {
+public:
+    virtual bool TransportAvailable() = 0;
+    virtual void insertIntoTransport() = 0;
+    virtual void removeFromTransport() = 0;
+
+};
 
 class ReturningEmptyFramesToHive : public Process {
 public:

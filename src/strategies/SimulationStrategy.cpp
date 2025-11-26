@@ -8,6 +8,6 @@ void SimulationStrategy::beeHivesProcess() {
         new OpeningHive();
     }
     
-
+    
 
 }

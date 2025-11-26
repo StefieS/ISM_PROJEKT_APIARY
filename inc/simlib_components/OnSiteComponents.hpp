@@ -2,6 +2,24 @@
 #define __ON_SITE_COMPONENTS
 
 #include <simlib.h>
+#include "BaseComponents.hpp"
 
+class OneTrolleyGetter : public ITransportGetter {
+
+public:
+    OneTrolleyGetter(int capacity)
+        : Trolley("Trolley", capacity),
+          location(Location::Hives),
+          status(TransportStatus::ReadyToLoad) {}
+
+    bool TransportAvailable() override;
+    void insertIntoTransport() override;
+    void removeFromTransport() override;
+
+private:
+Store Trolley;
+Location location;
+TransportStatus status;
+};
 
 #endif // __ON_SITE_COMPONENTS

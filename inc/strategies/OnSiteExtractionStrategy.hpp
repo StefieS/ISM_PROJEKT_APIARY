@@ -3,7 +3,7 @@
 
 #include "SimulationStrategy.hpp"
 #include "../constants/OnSiteConstants.hpp"
-
+#include "../simlib_components/OnSiteComponents.hpp"
 
 class OnSiteExtractionStrategy : public SimulationStrategy {
 
