@@ -13,7 +13,7 @@ public:
     virtual ~SimulationStrategy() = default;
 
     virtual void run() = 0;
-
+    
 protected:
     void beeHivesProcess();
 };

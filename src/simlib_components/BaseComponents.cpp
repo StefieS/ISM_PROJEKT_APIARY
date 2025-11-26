@@ -46,7 +46,6 @@ void LoadingFromStandToTransport::Behavior() {
 
 void TakingOutFrames::Behavior() {
     vprint("TakingOutFrames activated");
-    
     for (int i = 0; i < FRAMES_PER_HIVE; ++i) {
         Seize(*hiveBeekeeper, 1);
         vprint("Taking out frame " + std::to_string(i + 1) + " of " + std::to_string(FRAMES_PER_HIVE));

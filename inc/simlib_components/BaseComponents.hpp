@@ -9,6 +9,7 @@ class ITransportGetter;
 inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline uint stand;
+std::unordered_map<std::string, std::unique_ptr<Process>> processMap;
 
 enum class Location {
     Hives,
