@@ -8,6 +8,7 @@ inline int hives_to_open = 40;
 class ITransportGetter;
 inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Facility> hiveBeekeeper;
+inline uint stand;
 
 enum class Location {
     Hives,
@@ -22,10 +23,13 @@ enum class TransportStatus {
 
 class ITransportGetter {
 public:
-    virtual bool TransportAvailable() = 0;
-    virtual void insertIntoTransport() = 0;
-    virtual void removeFromTransport() = 0;
+    virtual bool transportAvailableForLoad(Location location) = 0;
+    virtual bool transportAvailableForUnload(Location location) = 0;
 
+    virtual void loadIntoTransport(Entity* caller) = 0;
+    virtual void unloadFromTransport() = 0;
+
+    virtual void moveToLocation(Location l) = 0;
 };
 
 class ReturningEmptyFramesToHive : public Process {

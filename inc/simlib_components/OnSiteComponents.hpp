@@ -12,9 +12,13 @@ public:
           location(Location::Hives),
           status(TransportStatus::ReadyToLoad) {}
 
-    bool TransportAvailable() override;
-    void insertIntoTransport() override;
-    void removeFromTransport() override;
+    bool transportAvailableForLoad(Location location) override;
+    bool transportAvailableForUnload(Location location) override;
+
+    void loadIntoTransport(Entity* caller) override;
+    void unloadFromTransport() override;
+
+    void moveToLocation(Location l) override;
 
 private:
 Store Trolley;

@@ -9,7 +9,7 @@ void ReturningEmptyFramesToHive::Behavior() {
         Seize(*hiveBeekeeper, 3);
         vprint("Returning empty frame " + std::to_string(i + 1) + " of " + std::to_string(framesToReturn));
         Wait(Normal(TIME_TO_PUT_THE_FRAME_BACK, 2));
-        // signal frame returned to hive
+        Transport->unloadFromTransport();
         Release(*hiveBeekeeper);
         vprint("Returned empty frame " + std::to_string(i + 1));
     }
@@ -21,8 +21,10 @@ void LoadingFromStandToTransport::Behavior() {
     Seize(*hiveBeekeeper, 2);
     vprint("LoadingFromStandToTransport started");
     Wait(Uniform(TIME_FROM_STAND_TO_TRANSPORT - 5, TIME_FROM_STAND_TO_TRANSPORT + 5));
-    // add to transport
-    // remove from stand
+
+    stand--;
+    Transport->loadIntoTransport(this);
+
     vprint("LoadingFromStandToTransport completed");
     Release(*hiveBeekeeper);
 }
@@ -35,9 +37,16 @@ void TakingOutFrames::Behavior() {
         vprint("Taking out frame " + std::to_string(i + 1) + " of " + std::to_string(FRAMES_PER_HIVE));
         Wait(Normal(TIME_TO_TAKE_OUT_FRAME, 1));
         vprint("Took out frame " + std::to_string(i + 1));
-        // drbni frame na transport alebo stand
-        // na transport ked available
-        // na stand ked transport neni available
+
+        if (Transport->transportAvailableForLoad(Location::Hives)) {
+            Transport->loadIntoTransport(this);
+            vprint("Loaded frame into transport");
+        } else {
+            stand++;
+            vprint("No transport available, placing frame on stand");
+
+        }
+
         Release(*hiveBeekeeper);
     }
     vprint("TakingOutFrames completed");
