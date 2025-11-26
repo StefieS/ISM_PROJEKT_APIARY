@@ -2,5 +2,6 @@
 
 
 void OnSiteExtractionStrategy::run() {
-    // TODO
+    Transport = std::make_unique<Store>(OnSiteConstants::TRANSPORT_CAPACITY);
+    hiveBeekeeper = std::make_unique<Facility>("On beekeeper");
 }

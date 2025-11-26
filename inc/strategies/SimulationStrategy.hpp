@@ -5,7 +5,7 @@
 #include <string>
 #include "../constants/BaseConstants.hpp"
 #include "../simlib_components/BaseComponents.hpp"
-
+#include <memory>
 // Description: Abstract interface for simulation strategies.
 class SimulationStrategy {
     

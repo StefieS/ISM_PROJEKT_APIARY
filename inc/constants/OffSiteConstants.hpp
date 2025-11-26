@@ -3,7 +3,7 @@
 
 
 namespace OffSiteConstants {
-    constexpr int OFF_TIME_EXAMPLE = 50;
+    constexpr int TRANSPORT_CAPACITY = 100;
 };
 
 #endif // __OFF_SITE_CONSTANTS

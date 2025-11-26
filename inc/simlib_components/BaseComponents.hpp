@@ -2,10 +2,12 @@
 #define __BASE_COMPONENTS
 
 #include <simlib.h>
+#include <memory>
 
-int hives_to_open = 40;
+inline int hives_to_open = 40;
+inline std::unique_ptr<Store> Transport;
+inline std::unique_ptr<Facility> hiveBeekeeper;
 
-Facility hiveBeekeeper("Hive Beekeeper");
 
 class ReturningEmptyFramesToHive : public Process {
 public:
