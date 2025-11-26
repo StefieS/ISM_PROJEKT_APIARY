@@ -3,13 +3,14 @@
 
 #include <simlib.h>
 #include <memory>
+#include <unordered_map>
 
 inline int hives_to_open = 40;
 class ITransportGetter;
 inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline uint stand;
-std::unordered_map<std::string, std::unique_ptr<Process>> processMap;
+inline std::unordered_map<std::string, std::unique_ptr<Process>> processMap;
 
 enum class Location {
     Hives,

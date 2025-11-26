@@ -18,4 +18,17 @@ protected:
     void beeHivesProcess();
 };
 
+#define BEEHIVES_PROCESSES() do { \
+    printf("Bee hives process started\n"); \
+    for (int i = 0; i < 5; i++) { \
+        new OpeningHive(); \
+    } \
+    processMap["LoadingFromStandToTransport"] = std::make_unique<LoadingFromStandToTransport>(); \
+    processMap["ReturningEmptyFramesToHive"] = std::make_unique<ReturningEmptyFramesToHive>(); \
+    processMap["LoadingFromStandToTransport"]->Activate(); \
+    processMap["ReturningEmptyFramesToHive"]->Activate(); \
+} while(0)
+
+
+
 #endif // __SIMULATION_STRATEGY

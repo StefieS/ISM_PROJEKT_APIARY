@@ -20,8 +20,9 @@ void OneTrolleyGetter::unloadFromTransport() {
     Trolley.Leave(1);
     if (this->Trolley.Empty()) {
         status = TransportStatus::ReadyToLoad;
-        // if position == hives
-        // LoadingFromStandToTransport activate
+        if (this->location == Location::Hives) {
+            processMap["LoadingFromStandToTransport"]->Activate();
+        }
         // else if position == shed
         // LoadingFromShelfToTransport activate
 
