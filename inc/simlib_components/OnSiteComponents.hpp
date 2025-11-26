@@ -21,9 +21,9 @@ public:
     void moveToLocation(Location l) override;
 
 private:
-Store Trolley;
-Location location;
-TransportStatus status;
+    Store Trolley;
+    Location location;
+    TransportStatus status;
 };
 
 #endif // __ON_SITE_COMPONENTS

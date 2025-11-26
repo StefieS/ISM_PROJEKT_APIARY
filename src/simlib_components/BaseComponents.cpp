@@ -3,6 +3,24 @@
 #include "../../inc/utils.hpp"
 using namespace BaseConstants;
 
+bool Extractor::isExtractorFree() {
+    return this->isFree;
+}
+
+void Extractor::loadIntoExtractor(Entity* caller) {
+    ExtractorS.Enter(caller, 1);
+    if (this->ExtractorS.Full()) {
+        isFree = false;
+    }
+}
+
+void Extractor::unloadFromExtractor() {
+    ExtractorS.Leave(1);
+    if (this->ExtractorS.Empty()) {
+        isFree = true;
+    }
+}
+
 // p 3
 void UnloadExtractor::Behavior() {
     Seize(*shedBeekeeper, 3);

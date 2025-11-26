@@ -7,7 +7,9 @@
 
 inline int hives_to_open = 40;
 class ITransportGetter;
+class Extractor;
 inline std::unique_ptr<ITransportGetter> Transport;
+inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline std::unique_ptr<Facility> shedBeekeeper;
 inline uint stand;
@@ -22,6 +24,20 @@ enum class TransportStatus {
     ReadyToLoad,
     WaitingForTransport,
     ReadyToUnload
+};
+
+class Extractor {
+public:
+    Extractor(int capacity)
+        : ExtractorS("Extractor", capacity),
+          isFree(true) {}
+    void loadIntoExtractor(Entity* caller);
+    void unloadFromExtractor();
+
+    bool isExtractorFree();
+private:
+    Store ExtractorS;
+    bool isFree;
 };
 
 class ITransportGetter {
