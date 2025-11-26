@@ -72,8 +72,11 @@ void TakingOutFrames::Behavior() {
             Transport->loadIntoTransport(this);
             vprint("Loaded frame into transport");
         } else {
+
             stand++;
+
             // LoadingFromStandToTransport activate
+            processMap["LoadingFromStandToTransport"]->Activate();
             vprint("No transport available, placing frame on stand");
 
         }
@@ -85,10 +88,10 @@ void TakingOutFrames::Behavior() {
 
 void OpeningHive::Behavior() {
     vprint("OpeningHive activated");
-    Seize(*hiveBeekeeper);
+    Seize(*hiveBeekeeper, 0);
     vprint("OpeningHive started");
     Wait(Uniform(TIME_TO_OPEN_HIVE - 5, TIME_TO_OPEN_HIVE + 5));
+    new TakingOutFrames();
     Release(*hiveBeekeeper);
     vprint("OpeningHive completed");
-    new TakingOutFrames();
 }
