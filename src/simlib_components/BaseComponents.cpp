@@ -32,8 +32,7 @@ void ExtractorRunning::Behavior() {
             goto again;
         }
 
-        // signal unloading possible
-        
+        UnloadExtractor unloadProc();
     }
 }
 
