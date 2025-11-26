@@ -5,7 +5,9 @@ using namespace BaseConstants;
 
 // p 3
 void UnloadExtractor::Behavior() {
-
+    Seize(*shedBeekeeper, 3);
+    Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
+    vprint("Unloaded one frame from extractor");
 }
 
 // p 2
@@ -31,8 +33,10 @@ void ExtractorRunning::Behavior() {
             vprint("Extractor started again");
             goto again;
         }
-
-        new UnloadExtractor();
+        
+        for (int i = 0; i < EXTRACTOR_CAPACITY; ++i) {
+            new UnloadExtractor();
+        }
     }
 }
 
