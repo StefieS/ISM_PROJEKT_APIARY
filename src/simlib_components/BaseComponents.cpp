@@ -32,7 +32,7 @@ void ExtractorRunning::Behavior() {
             goto again;
         }
 
-        UnloadExtractor unloadProc();
+        new UnloadExtractor();
     }
 }
 

@@ -68,6 +68,9 @@ public:
 class ExtractorRunning : public Process {
 public:
      void Behavior() override;
+    ExtractorRunning() {
+        Activate();
+    }
 }; 
 
 class LoadingFromShelfToExtractor : public Process {
@@ -78,6 +81,9 @@ public:
 class UnloadExtractor : public Process {
 public:
      void Behavior() override;
+    UnloadExtractor() {
+        Activate();
+    }
 };
 
 class GetAndLoadUncappedFrames : public Process {
