@@ -3,21 +3,41 @@
 #include "../../inc/utils.hpp"
 using namespace BaseConstants;
 
-void ExtractorRunning::Behavior() {
-
-}
-
-void LoadingFromShelfToExtractor::Behavior() {
-
-}
-
+// p 3
 void UnloadExtractor::Behavior() {
 
 }
 
+// p 2
+void LoadingFromShelfToExtractor::Behavior() {
+
+}
+
+// p 0
 void GetAndLoadUncappedFrames::Behavior() {
 
 }
+
+
+
+void ExtractorRunning::Behavior() {
+    while (true) {
+        Passivate();
+        vprint("ExtractorRunning activated");
+        again:
+        Wait(TIME_OF_EXTRACTOR_RUNNING);
+        vprint("Extractor finished running");
+        if (Random() <= PERC_EXTRACTOR_AGAIN) {
+            vprint("Extractor started again");
+            goto again;
+        }
+
+        // signal unloading possible
+        
+    }
+}
+
+
 
 void ReturningEmptyFramesToHive::Behavior() {
     while (true) {

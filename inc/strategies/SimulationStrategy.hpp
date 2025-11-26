@@ -17,7 +17,7 @@ public:
 protected:
     void beeHivesProcess();
 };
-
+// TODO replace 5 with hives_to_open when ready
 #define BEEHIVES_PROCESSES() do { \
     printf("Bee hives process started\n"); \
     for (int i = 0; i < 5; i++) { \
