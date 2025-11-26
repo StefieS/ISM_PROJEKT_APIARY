@@ -5,5 +5,8 @@ void OnSiteExtractionStrategy::run() {
     hiveBeekeeper = std::make_unique<Facility>("On beekeeper");
     Init(0, 1*60*60); // 1 hour simulation
     BEEHIVES_PROCESSES();
+    
+    RandomSeed(time(NULL));
+
     Run();
 }
