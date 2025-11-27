@@ -11,7 +11,7 @@ bool OneTrolleyGetter::transportAvailableForUnload(Location location) {
 void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
     Trolley.Enter(caller, 1);
     if (this->Trolley.Full()) {
-        status = TransportStatus::WaitingForTransport;
+        //status = TransportStatus::WaitingForTransport;
         // todo signal that transport is ready to go
     }
 }
@@ -21,15 +21,15 @@ void OneTrolleyGetter::unloadFromTransport() {
     if (this->Trolley.Empty()) {
         status = TransportStatus::ReadyToLoad;
         if (this->location == Location::Hives) {
-            while (stand && 
-                    Transport->transportAvailableForLoad(Location::Hives)) {
-                new LoadingFromStandToTransport();
+            if (stand && 
+                Transport->transportAvailableForLoad(Location::Hives)) {
+                    new LoadingFromStandToTransport();
             }
-        } else
-            while (!extractor->isExtractorFree() && 
-                    Transport->transportAvailableForLoad(Location::Shed)) {
-                new UnloadExtractor();
-            }
+        } else if (!extractor->isExtractorFree() &&
+                    Transport->transportAvailableForLoad(Location::Shed))
+                {
+                    new UnloadExtractor();
+                }
     }
 }
 

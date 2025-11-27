@@ -30,7 +30,10 @@ void LoadingFromStandToTransport::Behavior() {
 
         vprint("LoadingFromStandToTransport completed");
         Release(*hiveBeekeeper);
-    
+        if (stand && 
+            Transport->transportAvailableForLoad(Location::Hives)) {
+                new LoadingFromStandToTransport();
+            }
 }
 
 void TakingOutFrames::Behavior() {

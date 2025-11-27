@@ -12,6 +12,11 @@ void UnloadExtractor::Behavior() {
     Transport->loadIntoTransport(this);
     vprint("Unloaded one frame from extractor");
     Release(*shedBeekeeper);
+    if (!extractor->isExtractorFree() &&
+        Transport->transportAvailableForLoad(Location::Shed))
+    {
+        new UnloadExtractor();
+    }
 }
 
 // p 2
@@ -27,6 +32,9 @@ void LoadingFromShelfToExtractor::Behavior() {
 
     vprint("LoadingFromShelfToExtractor completed");
     Release(*shedBeekeeper);
+    if (shelf && extractor->isExtractorFree()) {
+        new LoadingFromShelfToExtractor();
+    }
 }
 
 // p 0
@@ -35,7 +43,6 @@ void GetAndLoadUncappedFrames::Behavior() {
     Seize(*shedBeekeeper);
     vprint("GetAndLoadUncappedFrames activated");
     Transport->unloadFromTransport();
-
     if (Random() <= PERC_LONG_UNCAPPING) {
         Wait(Normal(TIME_OF_LONG_UNCAPPING, 10));
     } else {
@@ -49,8 +56,9 @@ void GetAndLoadUncappedFrames::Behavior() {
         Release(*shedBeekeeper);
     } else {
         shelf++;
+        vprint("shelf++");
         Release(*shedBeekeeper);
-        while (shelf && extractor->isExtractorFree()) {
+        if (shelf && extractor->isExtractorFree()) {
             new LoadingFromShelfToExtractor();
         }
     }
@@ -68,11 +76,11 @@ void ExtractorRunning::Behavior() {
         goto again;
     }
 
-    while (Transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
+    if (Transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
         new UnloadExtractor();
     }
 
-    while (shelf && extractor->isExtractorFree()) {
+    if (shelf && extractor->isExtractorFree()) {
         new LoadingFromShelfToExtractor();
     }
 }

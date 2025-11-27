@@ -8,7 +8,7 @@
 #include "base_components/Extractor.hpp"
 #include "base_components/BeeHivesProcess.hpp"
 #include "base_components/ExtractorProcess.hpp"
-
+#include "../utils.hpp"
 inline int hives_to_open = 40;
 
 inline std::unique_ptr<ITransportGetter> Transport;
