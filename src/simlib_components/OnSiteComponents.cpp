@@ -26,8 +26,9 @@ void OneTrolleyGetter::unloadFromTransport() {
                     new LoadingFromStandToTransport();
             }
         } else if (!extractor->isExtractorFree() &&
-                    Transport->transportAvailableForLoad(Location::Shed))
+                    Transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
                 {
+                    vprint("Spawning new UnloadExtractor process from unloadFromTransport");
                     new UnloadExtractor();
                 }
     }

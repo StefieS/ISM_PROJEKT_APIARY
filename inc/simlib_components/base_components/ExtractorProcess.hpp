@@ -1,7 +1,6 @@
 #ifndef __EXTRACTOR_PROCESS
 #define __EXTRACTOR_PROCESS
-
-
+#include "../../utils.hpp"
 class ExtractorRunning : public Process {
 public:
     void Behavior() override;

@@ -6,16 +6,20 @@ using namespace BaseConstants;
 
 // p 3
 void UnloadExtractor::Behavior() {
+    vprint("UnloadExtractor activated");
     Seize(*shedBeekeeper, 3);
+    vprint("UnloadExtractor started");
     Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
     extractor->unloadFromExtractor();
     Transport->loadIntoTransport(this);
     vprint("Unloaded one frame from extractor");
     Release(*shedBeekeeper);
-    if (!extractor->isExtractorFree() &&
-        Transport->transportAvailableForLoad(Location::Shed))
-    {
+    if (!extractor->isExtractorFree() && !extractor->isRunning() &&
+        Transport->transportAvailableForLoad(Location::Shed)) {
+        vprint("Spawning new UnloadExtractor process recursively");
         new UnloadExtractor();
+    } else if (shelf && extractor->isExtractorFree() && !extractor->isRunning()) {
+        new LoadingFromShelfToExtractor();
     }
 }
 
@@ -67,6 +71,7 @@ void GetAndLoadUncappedFrames::Behavior() {
 
 void ExtractorRunning::Behavior() {
     vprint("ExtractorRunning activated");
+    extractor->startRunning();
     again:
     Wait(TIME_OF_EXTRACTOR_RUNNING);
     vprint("Extractor finished running");
@@ -75,7 +80,7 @@ void ExtractorRunning::Behavior() {
         vprint("Extractor started again");
         goto again;
     }
-
+    extractor->stopRunning();
     if (Transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
         new UnloadExtractor();
     }

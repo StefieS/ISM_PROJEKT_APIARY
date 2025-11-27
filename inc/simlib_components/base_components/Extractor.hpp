@@ -5,14 +5,26 @@ class Extractor {
 public:
     Extractor(int capacity)
         : ExtractorS("Extractor", capacity),
-          isFree(true) {}
+          isFree(true), running(false) {}
     void loadIntoExtractor(Entity* caller);
     void unloadFromExtractor();
 
     bool isExtractorFree();
+    bool isRunning() {
+        return running;
+    }
+
+    void startRunning() {
+        running=true;
+    }
+    
+    void stopRunning() {
+        running=false;
+    }
 private:
     Store ExtractorS;
     bool isFree;
+    bool running;
 };
 
 #endif // __EXTRACTOR
