@@ -4,6 +4,9 @@
 class ReturningEmptyFramesToHive : public Process {
 public:
     void Behavior() override;
+    ReturningEmptyFramesToHive() {
+        Activate();
+    }
 private:
     // set before the activation, based on the number of empty frames the transport has
     int framesToReturn = 0; 
@@ -12,6 +15,9 @@ private:
 class LoadingFromStandToTransport : public Process {
 public:
     void Behavior() override;
+    LoadingFromStandToTransport() {
+        Activate();
+    }
 };
 
 class TakingOutFrames : public Process {

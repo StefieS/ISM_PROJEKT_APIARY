@@ -18,23 +18,21 @@ void LoadingFromShelfToExtractor::Behavior() {
 
 // p 0
 void GetAndLoadUncappedFrames::Behavior() {
-
+    
 }
 
 void ExtractorRunning::Behavior() {
-    while (true) {
-        Passivate();
-        vprint("ExtractorRunning activated");
-        again:
-        Wait(TIME_OF_EXTRACTOR_RUNNING);
-        vprint("Extractor finished running");
-        if (Random() <= PERC_EXTRACTOR_AGAIN) {
-            vprint("Extractor started again");
-            goto again;
-        }
-        
-        for (int i = 0; i < EXTRACTOR_CAPACITY; ++i) {
-            new UnloadExtractor();
-        }
+    vprint("ExtractorRunning activated");
+    again:
+    Wait(TIME_OF_EXTRACTOR_RUNNING);
+    vprint("Extractor finished running");
+
+    if (Random() <= PERC_EXTRACTOR_AGAIN) {
+        vprint("Extractor started again");
+        goto again;
+    }
+
+    for (int i = 0; i < EXTRACTOR_CAPACITY; ++i) {
+        new UnloadExtractor();
     }
 }

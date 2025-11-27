@@ -5,12 +5,7 @@
 using namespace BaseConstants;
 
 void ReturningEmptyFramesToHive::Behavior() {
-    while (true) {
-        if (!Transport->transportAvailableForUnload(Location::Hives)) {
-            Passivate(); // wait until transport comes back from shed
-            continue;
-        }
-    
+    // TODO: spawn when hives available to unload
         vprint("ReturningEmptyFramesToHive activated");
         for (int i = 0; i < framesToReturn; ++i) {
             Seize(*hiveBeekeeper, 3);
@@ -21,17 +16,10 @@ void ReturningEmptyFramesToHive::Behavior() {
             vprint("Returned empty frame " + std::to_string(i + 1));
         }
         vprint("ReturningEmptyFramesToHive completed");
-    }
 }
 
 void LoadingFromStandToTransport::Behavior() {
-
-    while (true) {
-        if (stand == 0 || !Transport->transportAvailableForLoad(Location::Hives)) {
-            Passivate(); // wait until there is something on the stand and transport is available
-            continue;
-        }
-
+        // TODO: spawn when hives available to load and stand != 0
         vprint("LoadingFromStandToTransport activated");
         Seize(*hiveBeekeeper, 2);
         vprint("LoadingFromStandToTransport started");
@@ -42,7 +30,7 @@ void LoadingFromStandToTransport::Behavior() {
 
         vprint("LoadingFromStandToTransport completed");
         Release(*hiveBeekeeper);
-    }
+    
 }
 
 void TakingOutFrames::Behavior() {
@@ -61,7 +49,9 @@ void TakingOutFrames::Behavior() {
             stand++;
 
             // LoadingFromStandToTransport activate
-            processMap["LoadingFromStandToTransport"]->Activate();
+            if (Transport->transportAvailableForLoad(Location::Hives)) {
+                new LoadingFromStandToTransport();
+            }
             vprint("No transport available, placing frame on stand");
 
         }
@@ -73,7 +63,7 @@ void TakingOutFrames::Behavior() {
 
 void OpeningHive::Behavior() {
     vprint("OpeningHive activated");
-    Seize(*hiveBeekeeper, 0);
+    Seize(*hiveBeekeeper);
     vprint("OpeningHive started");
     Wait(Uniform(TIME_TO_OPEN_HIVE - 5, TIME_TO_OPEN_HIVE + 5));
     new TakingOutFrames();
