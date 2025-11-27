@@ -8,17 +8,53 @@ using namespace BaseConstants;
 void UnloadExtractor::Behavior() {
     Seize(*shedBeekeeper, 3);
     Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
+    extractor->unloadFromExtractor();
+    Transport->loadIntoTransport(this);
     vprint("Unloaded one frame from extractor");
+    Release(*shedBeekeeper);
 }
 
 // p 2
 void LoadingFromShelfToExtractor::Behavior() {
+    // TODO: spawn when extractor available to load and shelf != 0
+    vprint("LoadingFromShelfToExtractor activated");
+    Seize(*shedBeekeeper, 2);
+    vprint("LoadingFromShelfToExtractor started");
+    Wait(Uniform(TIME_TO_PUT_FRAME - 2, TIME_TO_PUT_FRAME + 2));
 
+    shelf--;
+    extractor->loadIntoExtractor(this);
+
+    vprint("LoadingFromShelfToExtractor completed");
+    Release(*shedBeekeeper);
 }
 
 // p 0
 void GetAndLoadUncappedFrames::Behavior() {
-    
+    Transport->loadIntoTransport(this); // todo remove this
+    Seize(*shedBeekeeper);
+    vprint("GetAndLoadUncappedFrames activated");
+    Transport->unloadFromTransport();
+
+    if (Random() <= PERC_LONG_UNCAPPING) {
+        Wait(Normal(TIME_OF_LONG_UNCAPPING, 10));
+    } else {
+        Wait(Normal(TIME_OF_SHORT_UNCAPPING, 5));
+    }
+
+    Wait(TIME_TO_PUT_FRAME);
+
+    if (extractor->isExtractorFree()) {
+        extractor->loadIntoExtractor(this);
+        Release(*shedBeekeeper);
+    } else {
+        shelf++;
+        Release(*shedBeekeeper);
+        while (shelf && extractor->isExtractorFree()) {
+            new LoadingFromShelfToExtractor();
+        }
+    }
+
 }
 
 void ExtractorRunning::Behavior() {
@@ -32,7 +68,11 @@ void ExtractorRunning::Behavior() {
         goto again;
     }
 
-    for (int i = 0; i < EXTRACTOR_CAPACITY; ++i) {
+    while (Transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
         new UnloadExtractor();
+    }
+
+    while (shelf && extractor->isExtractorFree()) {
+        new LoadingFromShelfToExtractor();
     }
 }

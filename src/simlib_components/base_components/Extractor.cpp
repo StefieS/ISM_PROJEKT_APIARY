@@ -12,6 +12,7 @@ void Extractor::loadIntoExtractor(Entity* caller) {
     ExtractorS.Enter(caller, 1);
     if (this->ExtractorS.Full()) {
         isFree = false;
+        new ExtractorRunning();
     }
 }
 

@@ -15,8 +15,8 @@ inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline std::unique_ptr<Facility> shedBeekeeper;
-inline uint stand;
-inline std::unordered_map<std::string, std::unique_ptr<Process>> processMap;
+inline uint stand = 0;
+inline uint shelf = 0;
 
 
 #endif // __BASE_COMPONENTS

@@ -10,7 +10,7 @@ void OnSiteExtractionStrategy::run() {
 
     Init(0, 1*60*60); // 1 hour simulation
 
-    BEEHIVES_PROCESSES();
-
+    //BEEHIVES_PROCESSES();
+    EXTRACTOR_PROCESSES();
     Run();
 }

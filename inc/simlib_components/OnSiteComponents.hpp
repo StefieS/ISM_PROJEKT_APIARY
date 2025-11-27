@@ -8,7 +8,7 @@ class OneTrolleyGetter : public ITransportGetter {
 public:
     OneTrolleyGetter(int capacity)
         : Trolley("Trolley", capacity),
-          location(Location::Hives),
+          location(Location::Shed),
           status(TransportStatus::ReadyToLoad) {}
 
     bool transportAvailableForLoad(Location location) override;

@@ -21,11 +21,15 @@ void OneTrolleyGetter::unloadFromTransport() {
     if (this->Trolley.Empty()) {
         status = TransportStatus::ReadyToLoad;
         if (this->location == Location::Hives) {
-            processMap["LoadingFromStandToTransport"]->Activate();
-        }
-        // else if position == shed
-        // LoadingFromShelfToTransport activate
-
+            while (stand && 
+                    Transport->transportAvailableForLoad(Location::Hives)) {
+                new LoadingFromStandToTransport();
+            }
+        } else
+            while (!extractor->isExtractorFree() && 
+                    Transport->transportAvailableForLoad(Location::Shed)) {
+                new UnloadExtractor();
+            }
     }
 }
 

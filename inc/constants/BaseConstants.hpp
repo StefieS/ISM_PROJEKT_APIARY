@@ -11,8 +11,13 @@ namespace BaseConstants {
 
     constexpr int TIME_OF_EXTRACTOR_RUNNING = 5*60;
     constexpr int TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR = 7;
+    constexpr int TIME_TO_PUT_FRAME = 13;
     constexpr int EXTRACTOR_CAPACITY = 5;
     constexpr double PERC_EXTRACTOR_AGAIN = 0.25;
+    constexpr double PERC_LONG_UNCAPPING = 0.25;
+
+    constexpr int TIME_OF_LONG_UNCAPPING = 1*60;
+    constexpr int TIME_OF_SHORT_UNCAPPING = 20;
 };
 
 #endif // __BASE_CONSTANTS

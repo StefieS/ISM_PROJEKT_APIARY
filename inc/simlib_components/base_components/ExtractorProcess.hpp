@@ -4,7 +4,7 @@
 
 class ExtractorRunning : public Process {
 public:
-     void Behavior() override;
+    void Behavior() override;
     ExtractorRunning() {
         Activate();
     }
@@ -12,12 +12,15 @@ public:
 
 class LoadingFromShelfToExtractor : public Process {
 public:
-     void Behavior() override;
+    void Behavior() override;
+    LoadingFromShelfToExtractor() {
+        Activate();
+    }
 }; 
 
 class UnloadExtractor : public Process {
 public:
-     void Behavior() override;
+    void Behavior() override;
     UnloadExtractor() {
         Activate();
     }
@@ -25,7 +28,10 @@ public:
 
 class GetAndLoadUncappedFrames : public Process {
 public:
-     void Behavior() override;
+    void Behavior() override;
+    GetAndLoadUncappedFrames() {
+        Activate();
+    }
 };
 
 #endif // __EXTRACTOR_PROCESS
