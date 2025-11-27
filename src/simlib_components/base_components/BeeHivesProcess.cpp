@@ -1,64 +1,8 @@
-#include "../../inc/simlib_components/BaseComponents.hpp"
-#include "../../inc/constants/BaseConstants.hpp"
-#include "../../inc/utils.hpp"
+#include "../../../inc/simlib_components/BaseComponents.hpp"
+#include "../../../inc/constants/BaseConstants.hpp"
+#include "../../../inc/utils.hpp"
+
 using namespace BaseConstants;
-
-bool Extractor::isExtractorFree() {
-    return this->isFree;
-}
-
-void Extractor::loadIntoExtractor(Entity* caller) {
-    ExtractorS.Enter(caller, 1);
-    if (this->ExtractorS.Full()) {
-        isFree = false;
-    }
-}
-
-void Extractor::unloadFromExtractor() {
-    ExtractorS.Leave(1);
-    if (this->ExtractorS.Empty()) {
-        isFree = true;
-    }
-}
-
-// p 3
-void UnloadExtractor::Behavior() {
-    Seize(*shedBeekeeper, 3);
-    Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
-    vprint("Unloaded one frame from extractor");
-}
-
-// p 2
-void LoadingFromShelfToExtractor::Behavior() {
-
-}
-
-// p 0
-void GetAndLoadUncappedFrames::Behavior() {
-
-}
-
-
-
-void ExtractorRunning::Behavior() {
-    while (true) {
-        Passivate();
-        vprint("ExtractorRunning activated");
-        again:
-        Wait(TIME_OF_EXTRACTOR_RUNNING);
-        vprint("Extractor finished running");
-        if (Random() <= PERC_EXTRACTOR_AGAIN) {
-            vprint("Extractor started again");
-            goto again;
-        }
-        
-        for (int i = 0; i < EXTRACTOR_CAPACITY; ++i) {
-            new UnloadExtractor();
-        }
-    }
-}
-
-
 
 void ReturningEmptyFramesToHive::Behavior() {
     while (true) {

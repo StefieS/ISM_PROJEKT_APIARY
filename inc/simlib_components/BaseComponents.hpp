@@ -4,108 +4,19 @@
 #include <simlib.h>
 #include <memory>
 #include <unordered_map>
+#include "base_components/InterfaceTransport.hpp"
+#include "base_components/Extractor.hpp"
+#include "base_components/BeeHivesProcess.hpp"
+#include "base_components/ExtractorProcess.hpp"
 
 inline int hives_to_open = 40;
-class ITransportGetter;
-class Extractor;
+
 inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline std::unique_ptr<Facility> shedBeekeeper;
 inline uint stand;
 inline std::unordered_map<std::string, std::unique_ptr<Process>> processMap;
-
-enum class Location {
-    Hives,
-    Shed
-};
-
-enum class TransportStatus {
-    ReadyToLoad,
-    WaitingForTransport,
-    ReadyToUnload
-};
-
-class Extractor {
-public:
-    Extractor(int capacity)
-        : ExtractorS("Extractor", capacity),
-          isFree(true) {}
-    void loadIntoExtractor(Entity* caller);
-    void unloadFromExtractor();
-
-    bool isExtractorFree();
-private:
-    Store ExtractorS;
-    bool isFree;
-};
-
-class ITransportGetter {
-public:
-    virtual bool transportAvailableForLoad(Location location) = 0;
-    virtual bool transportAvailableForUnload(Location location) = 0;
-
-    virtual void loadIntoTransport(Entity* caller) = 0;
-    virtual void unloadFromTransport() = 0;
-
-    virtual void moveToLocation(Location l) = 0;
-};
-
-class ReturningEmptyFramesToHive : public Process {
-public:
-    void Behavior() override;
-private:
-    // set before the activation, based on the number of empty frames the transport has
-    int framesToReturn = 0; 
-};
-
-class LoadingFromStandToTransport : public Process {
-public:
-    void Behavior() override;
-};
-
-class TakingOutFrames : public Process {
-public:
-    void Behavior() override;
-    TakingOutFrames() {
-        Activate();
-    }
-};
-
-class OpeningHive : public Process {
-public:
-    void Behavior() override;
-    OpeningHive() {
-        Activate();
-    }
-};
-
-
-class ExtractorRunning : public Process {
-public:
-     void Behavior() override;
-    ExtractorRunning() {
-        Activate();
-    }
-}; 
-
-class LoadingFromShelfToExtractor : public Process {
-public:
-     void Behavior() override;
-}; 
-
-class UnloadExtractor : public Process {
-public:
-     void Behavior() override;
-    UnloadExtractor() {
-        Activate();
-    }
-};
-
-class GetAndLoadUncappedFrames : public Process {
-public:
-     void Behavior() override;
-};
 
 
 #endif // __BASE_COMPONENTS
