@@ -43,7 +43,6 @@ void LoadingFromShelfToExtractor::Behavior() {
 
 // p 0
 void GetAndLoadUncappedFrames::Behavior() {
-    Transport->loadIntoTransport(this); // todo remove this
     Seize(*shedBeekeeper);
     vprint("GetAndLoadUncappedFrames activated");
     Transport->unloadFromTransport();

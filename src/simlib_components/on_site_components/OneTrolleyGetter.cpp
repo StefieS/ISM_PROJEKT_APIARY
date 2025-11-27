@@ -1,4 +1,4 @@
-#include "../../inc/simlib_components/OnSiteComponents.hpp"
+#include "../../../inc/simlib_components/OnSiteComponents.hpp"
 
 bool OneTrolleyGetter::transportAvailableForLoad(Location location) {
     return (this->location == location) && (status == TransportStatus::ReadyToLoad);
@@ -11,7 +11,7 @@ bool OneTrolleyGetter::transportAvailableForUnload(Location location) {
 void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
     Trolley.Enter(caller, 1);
     if (this->Trolley.Full()) {
-        //status = TransportStatus::WaitingForTransport;
+        status = TransportStatus::WaitingForTransport;
         // todo signal that transport is ready to go
     }
 }

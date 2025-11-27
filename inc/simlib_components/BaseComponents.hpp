@@ -9,12 +9,13 @@
 #include "base_components/BeeHivesProcess.hpp"
 #include "base_components/ExtractorProcess.hpp"
 #include "../utils.hpp"
-inline int hives_to_open = 40;
+
 
 inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline std::unique_ptr<Facility> shedBeekeeper;
+
 inline uint stand = 0;
 inline uint shelf = 0;
 

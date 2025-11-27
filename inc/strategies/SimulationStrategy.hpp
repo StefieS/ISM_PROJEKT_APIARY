@@ -23,11 +23,5 @@ public:
     } \
 } while(0)
 
-#define EXTRACTOR_PROCESSES() do { \
-    for (int i = 0; i<10;i++) { \
-        new GetAndLoadUncappedFrames(); \
-    } \
-} while(0)
-
 
 #endif // __SIMULATION_STRATEGY
