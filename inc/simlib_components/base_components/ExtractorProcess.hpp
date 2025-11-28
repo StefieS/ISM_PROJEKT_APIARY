@@ -33,4 +33,12 @@ public:
     }
 };
 
+class TakeBucketHoneyAway : public Process {
+public:
+    void Behavior() override;
+    TakeBucketHoneyAway() {
+        Activate();
+    }
+};
+
 #endif // __EXTRACTOR_PROCESS

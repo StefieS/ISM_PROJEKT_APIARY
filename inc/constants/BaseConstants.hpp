@@ -17,6 +17,10 @@ namespace BaseConstants {
     constexpr double PERC_EXTRACTOR_AGAIN = 0.1;
     constexpr double PERC_LONG_UNCAPPING = 0.25;
 
+    constexpr int HONEY_PER_EXTRACTOR_RUN = 5;
+    constexpr int BUCKET_CAPACITY = 20;
+    constexpr int BUCKET_TAKING_TIME = 40;
+
     constexpr int TIME_OF_LONG_UNCAPPING = 1*60;
     constexpr int TIME_OF_SHORT_UNCAPPING = 20;
 };

@@ -4,6 +4,16 @@
 
 using namespace BaseConstants;
 
+void TakeBucketHoneyAway::Behavior() {
+    vprint("TakeBucketHoneyAway activated", LogColor::ExtractorColor);
+    Seize(*shedBeekeeper, 4);
+    vprint("Taking bucket of honey away", LogColor::ExtractorColor);
+    Wait(Uniform(BUCKET_TAKING_TIME - 5, BUCKET_TAKING_TIME + 5));
+    extractedHoney -= BUCKET_CAPACITY;
+    vprint("Bucket of honey taken away", LogColor::ExtractorColor);
+    Release(*shedBeekeeper);
+}
+
 // p 3
 void UnloadExtractor::Behavior() {
     vprint("UnloadExtractor activated", LogColor::ExtractorColor);
@@ -74,6 +84,11 @@ void ExtractorRunning::Behavior() {
     again:
     Wait(TIME_OF_EXTRACTOR_RUNNING);
     vprint("Extractor finished running", LogColor::ExtractorColor);
+    extractedHoney += HONEY_PER_EXTRACTOR_RUN;
+
+    if (extractedHoney >= BUCKET_CAPACITY) {
+        new TakeBucketHoneyAway();
+    }
 
     if (Random() <= PERC_EXTRACTOR_AGAIN) {
         vprint("Extractor started again", LogColor::ExtractorColor);

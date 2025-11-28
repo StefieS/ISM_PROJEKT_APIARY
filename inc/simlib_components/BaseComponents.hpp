@@ -28,6 +28,8 @@ inline std::unique_ptr<Timer> shedTimer;
 inline uint stand = 0;
 inline uint shelf = 0;
 
+inline uint extractedHoney = 0;
+
 inline uint returnedFrames = 0;
 
 #endif // __BASE_COMPONENTS
