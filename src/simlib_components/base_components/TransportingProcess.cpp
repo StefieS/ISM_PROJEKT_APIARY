@@ -69,14 +69,23 @@ void TransportingFrames::Behavior() {
 }
 
 void Timer::Behavior() {
+    vprint("Timer process started");
     Stop:
     Passivate();
+    vprint("Timer process reactivated");
     Restart:
     Wait(time);
-    if (restart) goto Restart;
+    vprint("Timer process waited for time");
+    if (restart) {
+        vprint("Timer process restarting");
+        goto Restart;
+    }
 
-    if (stop) goto Stop;
-
+    if (stop) {
+        vprint("Timer process stopping");
+        goto Stop;
+    }
+        vprint("Activating transport process from timer");
     transportProcess->Activate();
     goto Restart;
 
