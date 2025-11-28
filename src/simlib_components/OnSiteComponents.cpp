@@ -1,4 +1,4 @@
-#include "../../../inc/simlib_components/OnSiteComponents.hpp"
+#include "../../inc/simlib_components/OnSiteComponents.hpp"
 
 bool OneTrolleyGetter::transportAvailableForLoad(Location location) {
     return (this->location == location) && (status == TransportStatus::ReadyToLoad);
