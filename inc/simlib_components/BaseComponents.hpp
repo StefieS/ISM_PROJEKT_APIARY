@@ -4,6 +4,7 @@
 #include <simlib.h>
 #include <memory>
 #include <unordered_map>
+
 #include "base_components/InterfaceTransport.hpp"
 #include "base_components/Extractor.hpp"
 #include "base_components/BeeHivesProcess.hpp"
@@ -21,8 +22,8 @@ inline std::unique_ptr<Facility> transportBeekeeperAtShed;
 inline std::unique_ptr<Facility> transportBeekeeperAtHives;
 
 inline std::unique_ptr<Process> transportProcess;
-inline std::unique_ptr<Process> hivesTimer;
-inline std::unique_ptr<Process> shedTimer;
+inline std::unique_ptr<Timer> hivesTimer;
+inline std::unique_ptr<Timer> shedTimer;
 
 inline uint stand = 0;
 inline uint shelf = 0;

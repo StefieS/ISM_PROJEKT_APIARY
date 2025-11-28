@@ -1,6 +1,10 @@
 #include "../../inc/strategies/OnSiteExtractionStrategy.hpp"
 
 void OnSiteExtractionStrategy::run() {
+    RandomSeed(time(NULL));
+
+    Init(0, 3*60*60); // 3 hour simulation
+    
     g_transport = std::make_unique<OneTrolleyGetter>(OnSiteConstants::TRANSPORT_CAPACITY);
 
     hiveBeekeeper = std::make_unique<Facility>("On hivesBeekeeper");
@@ -15,10 +19,6 @@ void OnSiteExtractionStrategy::run() {
 
     hivesTimer =std::make_unique<Timer>(OnSiteConstants::HIVES_TIMEOUT_TIME);
     shedTimer = std::make_unique<Timer>(OnSiteConstants::SHED_TIMEOUT_TIME);
-
-    RandomSeed(time(NULL));
-
-    Init(0, 3*60*60); // 3 hour simulation
 
     BEEHIVES_PROCESSES();
     Run();

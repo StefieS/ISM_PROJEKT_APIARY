@@ -22,10 +22,11 @@ public:
         }
     void setRestart(bool to);
     void setStop(bool to);
+    
 private:
     int time;
     bool restart;
     bool stop;
-}
+};
 
 #endif // __TRANSPORT_PROCESS
