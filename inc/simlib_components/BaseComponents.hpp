@@ -8,6 +8,7 @@
 #include "base_components/Extractor.hpp"
 #include "base_components/BeeHivesProcess.hpp"
 #include "base_components/ExtractorProcess.hpp"
+#include "base_components/TransportProcess.hpp"
 #include "../utils.hpp"
 
 
@@ -15,6 +16,12 @@ inline std::unique_ptr<ITransportGetter> Transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline std::unique_ptr<Facility> shedBeekeeper;
+
+inline std::unique_ptr<Facility> transportBeekeeperAtShed;
+inline std::unique_ptr<Facility> transportBeekeeperAtHives;
+
+inline std::unique_ptr<Process> transportProcess;
+
 
 inline uint stand = 0;
 inline uint shelf = 0;

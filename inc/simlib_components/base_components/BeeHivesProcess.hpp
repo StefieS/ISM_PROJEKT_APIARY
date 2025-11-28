@@ -7,9 +7,6 @@ public:
     ReturningEmptyFramesToHive() {
         Activate();
     }
-private:
-    // set before the activation, based on the number of empty frames the transport has
-    int framesToReturn = 0; 
 };
 
 class LoadingFromStandToTransport : public Process {

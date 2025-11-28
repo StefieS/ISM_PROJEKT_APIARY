@@ -10,7 +10,7 @@ bool Extractor::isExtractorFree() {
 
 void Extractor::loadIntoExtractor(Entity* caller) {
     ExtractorS.Enter(caller, 1);
-    vprint("Frame loaded into extractor");
+    vprint("Frame loaded into extractor", LogColor::Extractor);
     if (this->ExtractorS.Full()) {
         isFree = false;
         new ExtractorRunning();
@@ -19,7 +19,7 @@ void Extractor::loadIntoExtractor(Entity* caller) {
 
 void Extractor::unloadFromExtractor() {
     ExtractorS.Leave(1);
-    vprint("Frame unloaded from extractor");
+    vprint("Frame unloaded from extractor", LogColor::Extractor);
     if (this->ExtractorS.Empty()) {
         isFree = true;
     }

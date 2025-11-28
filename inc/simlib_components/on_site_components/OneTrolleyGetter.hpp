@@ -11,6 +11,11 @@ public:
 
     bool transportAvailableForLoad(Location location) override;
     bool transportAvailableForUnload(Location location) override;
+    bool transportWaitingForTransport(Location location) override;
+
+    int numberOfFramesInTransport() override {
+        return Trolley.Used();
+    }
 
     void loadIntoTransport(Entity* caller) override;
     void unloadFromTransport() override;

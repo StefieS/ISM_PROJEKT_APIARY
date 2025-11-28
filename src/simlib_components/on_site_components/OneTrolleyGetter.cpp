@@ -7,12 +7,16 @@ bool OneTrolleyGetter::transportAvailableForLoad(Location location) {
 bool OneTrolleyGetter::transportAvailableForUnload(Location location) {
     return (this->location == location) && (status == TransportStatus::ReadyToUnload);
 }
+
+bool OneTrolleyGetter::transportWaitingForTransport(Location location) {
+    return (this->location == location) && (status == TransportStatus::WaitingForTransport);
+}
  
 void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
     Trolley.Enter(caller, 1);
     if (this->Trolley.Full()) {
         status = TransportStatus::WaitingForTransport;
-        // todo signal that transport is ready to go
+        transportProcess->Activate();
     }
 }
 
@@ -28,7 +32,6 @@ void OneTrolleyGetter::unloadFromTransport() {
         } else if (!extractor->isExtractorFree() &&
                     Transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
                 {
-                    vprint("Spawning new UnloadExtractor process from unloadFromTransport");
                     new UnloadExtractor();
                 }
     }
@@ -36,4 +39,5 @@ void OneTrolleyGetter::unloadFromTransport() {
 
 void OneTrolleyGetter::moveToLocation(Location l) {
     location = l;
+    status = TransportStatus::ReadyToUnload;
 }
