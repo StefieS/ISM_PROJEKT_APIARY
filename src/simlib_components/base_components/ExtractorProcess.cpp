@@ -6,17 +6,17 @@ using namespace BaseConstants;
 
 // p 3
 void UnloadExtractor::Behavior() {
-    vprint("UnloadExtractor activated", LogColor::Extractor);
+    vprint("UnloadExtractor activated", LogColor::ExtractorColor);
     Seize(*shedBeekeeper, 3);
-    vprint("UnloadExtractor started", LogColor::Extractor);
+    vprint("UnloadExtractor started", LogColor::ExtractorColor);
     Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
     extractor->unloadFromExtractor();
-    Transport->loadIntoTransport(this);
-    vprint("Unloaded one frame from extractor", LogColor::Extractor);
+    g_transport->loadIntoTransport(this);
+    vprint("Unloaded one frame from extractor", LogColor::ExtractorColor);
     Release(*shedBeekeeper);
     if (!extractor->isExtractorFree() && !extractor->isRunning() &&
-        Transport->transportAvailableForLoad(Location::Shed)) {
-        vprint("Spawning new UnloadExtractor process recursively", LogColor::Extractor);
+        g_transport->transportAvailableForLoad(Location::Shed)) {
+        vprint("Spawning new UnloadExtractor process recursively", LogColor::ExtractorColor);
         new UnloadExtractor();
     } else if (shelf && extractor->isExtractorFree() && !extractor->isRunning()) {
         new LoadingFromShelfToExtractor();
@@ -26,15 +26,15 @@ void UnloadExtractor::Behavior() {
 // p 2
 void LoadingFromShelfToExtractor::Behavior() {
     // TODO: spawn when extractor available to load and shelf != 0
-    vprint("LoadingFromShelfToExtractor activated", LogColor::Extractor);
+    vprint("LoadingFromShelfToExtractor activated", LogColor::ExtractorColor);
     Seize(*shedBeekeeper, 2);
-    vprint("LoadingFromShelfToExtractor started", LogColor::Extractor);
+    vprint("LoadingFromShelfToExtractor started", LogColor::ExtractorColor);
     Wait(Uniform(TIME_TO_PUT_FRAME - 2, TIME_TO_PUT_FRAME + 2));
 
     shelf--;
     extractor->loadIntoExtractor(this);
 
-    vprint("LoadingFromShelfToExtractor completed", LogColor::Extractor);
+    vprint("LoadingFromShelfToExtractor completed", LogColor::ExtractorColor);
     Release(*shedBeekeeper);
     if (shelf && extractor->isExtractorFree()) {
         new LoadingFromShelfToExtractor();
@@ -44,8 +44,8 @@ void LoadingFromShelfToExtractor::Behavior() {
 // p 0
 void GetAndLoadUncappedFrames::Behavior() {
     Seize(*shedBeekeeper);
-    vprint("GetAndLoadUncappedFrames activated", LogColor::Extractor);
-    Transport->unloadFromTransport();
+    vprint("GetAndLoadUncappedFrames activated", LogColor::ExtractorColor);
+    g_transport->unloadFromTransport();
     if (Random() <= PERC_LONG_UNCAPPING) {
         Wait(Normal(TIME_OF_LONG_UNCAPPING, 10));
     } else {
@@ -69,18 +69,18 @@ void GetAndLoadUncappedFrames::Behavior() {
 }
 
 void ExtractorRunning::Behavior() {
-    vprint("ExtractorRunning activated", LogColor::Extractor);
+    vprint("ExtractorRunning activated", LogColor::ExtractorColor);
     extractor->startRunning();
     again:
     Wait(TIME_OF_EXTRACTOR_RUNNING);
-    vprint("Extractor finished running", LogColor::Extractor);
+    vprint("Extractor finished running", LogColor::ExtractorColor);
 
     if (Random() <= PERC_EXTRACTOR_AGAIN) {
-        vprint("Extractor started again", LogColor::Extractor);
+        vprint("Extractor started again", LogColor::ExtractorColor);
         goto again;
     }
     extractor->stopRunning();
-    if (Transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
+    if (g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
         new UnloadExtractor();
     }
 

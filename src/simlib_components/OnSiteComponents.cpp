@@ -14,16 +14,19 @@ bool OneTrolleyGetter::transportWaitingForTransport(Location location) {
  
 void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
     Trolley.Enter(caller, 1);
+
     if (this->Trolley.Full()) {
         status = TransportStatus::WaitingForTransport;
         transportProcess->Activate();
     }
-    // todo: activate timer 
-    // wait (T);
-    // if (something) transportProcess->Activate();
-    // nechceme aby sa to aktivovalo ked to uz bolo aktivovane taze staci asi bool activated ?
-    // => if (!actived) transportProcess->Activate();
-    // za mna dava zmysel
+
+    if (this->getLocation() == Location::Hives) {
+        hivesTimer->setRestart(true);
+        hivesTimer->Activate();
+    } else {
+        shedTimer->setRestart(true);
+        shedTimer->Activate();
+    }
 
 }
 
@@ -32,13 +35,21 @@ void OneTrolleyGetter::unloadFromTransport() {
     if (this->Trolley.Empty()) {
         status = TransportStatus::ReadyToLoad;
         if (this->location == Location::Hives) {
+            hivesTimer->setRestart(true);
+            hivesTimer->setStop(false);
+
+            hivesTimer->Activate();
+    
             if (stand && 
-                Transport->transportAvailableForLoad(Location::Hives)) {
+                g_transport->transportAvailableForLoad(Location::Hives)) {
                     new LoadingFromStandToTransport();
             }
         } else if (!extractor->isExtractorFree() &&
-                    Transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
+                    g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
                 {
+                    shedTimer->setRestart(true);
+                    shedTimer->setStop(false);
+                    shedTimer->Activate();
                     new UnloadExtractor();
                 }
     }
@@ -48,3 +59,4 @@ void OneTrolleyGetter::moveToLocation(Location l) {
     location = l;
     status = TransportStatus::ReadyToUnload;
 }
+

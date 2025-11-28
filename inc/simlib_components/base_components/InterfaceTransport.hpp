@@ -1,5 +1,6 @@
 #ifndef __INTERFACE_TRANSPORT
 #define __INTERFACE_TRANSPORT
+
 #include <simlib.h>
 
 enum class Location {
@@ -25,6 +26,8 @@ public:
     virtual void unloadFromTransport() = 0;
 
     virtual void moveToLocation(Location l) = 0;
+
+    virtual Location getLocation() = 0;
 };
 
 #endif // __INTERFACE_TRANSPORT

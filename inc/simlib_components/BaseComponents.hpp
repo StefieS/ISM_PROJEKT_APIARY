@@ -12,7 +12,7 @@
 #include "../utils.hpp"
 
 
-inline std::unique_ptr<ITransportGetter> Transport;
+inline std::unique_ptr<ITransportGetter> g_transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline std::unique_ptr<Facility> shedBeekeeper;
@@ -21,7 +21,8 @@ inline std::unique_ptr<Facility> transportBeekeeperAtShed;
 inline std::unique_ptr<Facility> transportBeekeeperAtHives;
 
 inline std::unique_ptr<Process> transportProcess;
-
+inline std::unique_ptr<Process> hivesTimer;
+inline std::unique_ptr<Process> shedTimer;
 
 inline uint stand = 0;
 inline uint shelf = 0;

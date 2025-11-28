@@ -5,6 +5,7 @@
 #include "../constants/OnSiteConstants.hpp"
 #include "../simlib_components/OnSiteComponents.hpp"
 #include "../utils.hpp"
+
 class OnSiteExtractionStrategy : public SimulationStrategy {
 
 public:

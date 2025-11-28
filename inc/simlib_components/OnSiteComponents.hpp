@@ -24,6 +24,10 @@ public:
 
     void moveToLocation(Location l) override;
 
+    Location getLocation() override {
+        return location;
+    }
+
 private:
     Store Trolley;
     Location location;

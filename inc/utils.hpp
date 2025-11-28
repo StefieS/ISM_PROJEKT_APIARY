@@ -10,9 +10,9 @@
 extern bool globalVerbose;
 enum class LogColor {
     Default,
-    Transport,
-    Hives,
-    Extractor,
+    TransportColor,
+    HivesColor,
+    ExtractorColor,
 };
 
 /**
@@ -26,9 +26,9 @@ inline void vprint(const std::string& msg, LogColor color = LogColor::Default) {
     const char* code = "";
 
     switch (color) {
-        case LogColor::Hives:     code = "\033[31m"; break;
-        case LogColor::Extractor:   code = "\033[32m"; break;
-        case LogColor::Transport:    code = "\033[34m"; break;
+        case LogColor::HivesColor:     code = "\033[31m"; break;
+        case LogColor::ExtractorColor:   code = "\033[32m"; break;
+        case LogColor::TransportColor:    code = "\033[34m"; break;
         default:                code = "\033[0m";  break;
     }
 
