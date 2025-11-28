@@ -18,6 +18,13 @@ void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
         status = TransportStatus::WaitingForTransport;
         transportProcess->Activate();
     }
+    // todo: activate timer 
+    // wait (T);
+    // if (something) transportProcess->Activate();
+    // nechceme aby sa to aktivovalo ked to uz bolo aktivovane taze staci asi bool activated ?
+    // => if (!actived) transportProcess->Activate();
+    // za mna dava zmysel
+
 }
 
 void OneTrolleyGetter::unloadFromTransport() {
