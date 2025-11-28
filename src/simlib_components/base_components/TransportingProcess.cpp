@@ -44,11 +44,37 @@ void TransportingFrames::Behavior() {
         vprint("Transporter arrived at location", LogColor::TransportColor);
 
         if (this->location == Location::Hives) {
+            if (g_transport->numberOfFramesInTransport() == 0) {
+                vprint("No frames in transport to unload in hives", LogColor::TransportColor);
+                g_transport->setStatus(TransportStatus::ReadyToLoad);
+                hivesTimer->setRestart(true);
+                hivesTimer->setStop(false);
+
+                hivesTimer->Activate();
+        
+                if (stand && 
+                    g_transport->transportAvailableForLoad(Location::Hives)) {
+                        new LoadingFromStandToTransport();
+                }
+            }
             for (int i = 0; i < g_transport->numberOfFramesInTransport(); i++) {
                 new ReturningEmptyFramesToHive();
             }
             hivesTimer->setStop(false);
         } else {
+            if (g_transport->numberOfFramesInTransport() == 0) {
+                vprint("No frames in transport to unload in shed", LogColor::TransportColor);
+                g_transport->setStatus(TransportStatus::ReadyToLoad);
+
+                if (!extractor->isExtractorFree() &&
+                    g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
+                {
+                    shedTimer->setRestart(true);
+                    shedTimer->setStop(false);
+                    shedTimer->Activate();
+                    new UnloadExtractor();
+                }
+            }
             for (int i = 0; i < g_transport->numberOfFramesInTransport(); i++) {
                 new GetAndLoadUncappedFrames();
             }
@@ -69,23 +95,24 @@ void TransportingFrames::Behavior() {
 }
 
 void Timer::Behavior() {
-    vprint("Timer process started");
     Stop:
     Passivate();
-    vprint("Timer process reactivated");
     Restart:
     Wait(time);
-    vprint("Timer process waited for time");
+
     if (restart) {
-        vprint("Timer process restarting");
+        this->restart = false;
+        vprint(std::to_string(this->id) + " Timer restarting");
         goto Restart;
     }
 
     if (stop) {
-        vprint("Timer process stopping");
+        vprint(std::to_string(this->id) + " Timer stopping");
         goto Stop;
     }
-        vprint("Activating transport process from timer");
+
+    vprint(std::to_string(this->id) + " Timer activating transport process");
+    g_transport->setStatus(TransportStatus::WaitingForTransport);
     transportProcess->Activate();
     goto Restart;
 

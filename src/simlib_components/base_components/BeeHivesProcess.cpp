@@ -12,6 +12,14 @@ void ReturningEmptyFramesToHive::Behavior() {
         g_transport->unloadFromTransport();
         Release(*hiveBeekeeper);
         vprint("ReturningEmptyFramesToHive completed", LogColor::HivesColor);
+        returnedFrames++;
+        if (returnedFrames == BaseConstants::HIVES_TO_OPEN * BaseConstants::FRAMES_PER_HIVE) {
+            vprint("All frames returned, stopping timer");
+            hivesTimer->setStop(true);
+            hivesTimer->setRestart(false);
+            shedTimer->setStop(true);
+            shedTimer->setRestart(false);
+        }
 }
 
 void LoadingFromStandToTransport::Behavior() {
