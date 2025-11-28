@@ -16,10 +16,9 @@ public:
     
 };
 
-// TODO replace 5 with hives_to_open when ready
 #define BEEHIVES_PROCESSES() do { \
     transportProcess->Activate(); \
-    for (int i = 0; i < 5; i++) { \
+    for (int i = 0; i < BaseConstants::HIVES_TO_OPEN; i++) { \
         new OpeningHive(); \
     } \
 } while(0)

@@ -26,7 +26,7 @@ public:
     virtual void unloadFromTransport() = 0;
 
     virtual void moveToLocation(Location l) = 0;
-
+    virtual void setStatus(TransportStatus newStatus) = 0;
     virtual Location getLocation() = 0;
 };
 

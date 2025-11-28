@@ -22,6 +22,9 @@ public:
     void loadIntoTransport(Entity* caller) override;
     void unloadFromTransport() override;
 
+    void setStatus(TransportStatus newStatus) {
+        status = newStatus;
+    }
     void moveToLocation(Location l) override;
 
     Location getLocation() override {

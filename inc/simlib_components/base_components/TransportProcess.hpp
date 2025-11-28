@@ -16,8 +16,8 @@ private:
 class Timer : public Process {
 public:
     void Behavior() override;
-    Timer(int time) 
-        : time(time), restart(false), stop(false) {
+    Timer(int time, int id) 
+        : time(time), restart(false), stop(false), id(id) {
             Activate();
         }
     void setRestart(bool to);
@@ -27,6 +27,7 @@ private:
     int time;
     bool restart;
     bool stop;
+    int id;
 };
 
 #endif // __TRANSPORT_PROCESS

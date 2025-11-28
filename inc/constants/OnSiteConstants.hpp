@@ -5,7 +5,7 @@
 namespace OnSiteConstants {
     constexpr int TRANSPORT_CAPACITY = 10;
     constexpr int TRANSPORT_TIME = 1*60;
-    constexpr int SHED_TIMEOUT_TIME = 3*60;
+    constexpr int SHED_TIMEOUT_TIME = 6*60;
     constexpr int HIVES_TIMEOUT_TIME = 3*60;
 };
 
