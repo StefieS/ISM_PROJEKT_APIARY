@@ -1,5 +1,5 @@
 #include "../../inc/simlib_components/OnSiteComponents.hpp"
-
+#include <algorithm>
 bool OneTrolleyGetter::transportAvailableForLoad(Location location) {
     return (this->location == location) && (status == TransportStatus::ReadyToLoad);
 }
@@ -13,6 +13,7 @@ bool OneTrolleyGetter::transportWaitingForTransport(Location location) {
 }
  
 void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
+    vprint("Enter in onetrolleygetter", LogColor::Default);
     Trolley.Enter(caller, 1);
 
     if (this->Trolley.Full()) {
@@ -31,6 +32,7 @@ void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
 }
 
 void OneTrolleyGetter::unloadFromTransport() {
+    vprint("Leave in onetrolleygetter", LogColor::Default);
     Trolley.Leave(1);
     if (this->Trolley.Empty()) {
         status = TransportStatus::ReadyToLoad;
@@ -40,18 +42,17 @@ void OneTrolleyGetter::unloadFromTransport() {
 
             hivesTimer->Activate();
     
-            if (stand && 
-                g_transport->transportAvailableForLoad(Location::Hives)) {
+            for (int i = 0; i < std::min(g_transport->capacity(), stand); i++) {
                     new LoadingFromStandToTransport();
             }
-        } else if (!extractor->isExtractorFree() &&
-                    g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
-                {
-                    shedTimer->setRestart(true);
-                    shedTimer->setStop(false);
-                    shedTimer->Activate();
-                    new UnloadExtractor();
-                }
+        } else if (g_transport->transportAvailableForLoad(Location::Shed)) {
+            shedTimer->setRestart(true);
+            shedTimer->setStop(false);
+            shedTimer->Activate();
+            for (int i = 0; i < std::min(emptyShelf, g_transport->capacity()); i++) {
+                new FromShelfToTransport();
+            }
+        }
     }
 }
 

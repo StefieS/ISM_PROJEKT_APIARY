@@ -7,7 +7,7 @@ class TransportingFrames : public Process {
 public:
     void Behavior() override;
     TransportingFrames(Location location, int transportTime)
-        : location(location), transportTime(transportTime) {}
+        : location(location), transportTime(transportTime) {this->Priority = 1;}
 private:
     Location location;
     int transportTime;
@@ -18,7 +18,7 @@ public:
     void Behavior() override;
     Timer(int time, int id) 
         : time(time), restart(false), stop(false), id(id) {
-            Activate();
+           Activate();
         }
     void setRestart(bool to);
     void setStop(bool to);

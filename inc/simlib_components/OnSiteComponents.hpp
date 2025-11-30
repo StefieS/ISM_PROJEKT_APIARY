@@ -19,6 +19,10 @@ public:
         return Trolley.Used();
     }
 
+    int capacity() override {
+        return Trolley.Capacity();
+    }
+
     void loadIntoTransport(Entity* caller) override;
     void unloadFromTransport() override;
 

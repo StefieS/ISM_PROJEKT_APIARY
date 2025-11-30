@@ -16,17 +16,18 @@
 inline std::unique_ptr<ITransportGetter> g_transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
-inline std::unique_ptr<Facility> shedBeekeeper;
+inline Facility* shedBeekeeper;
 
-inline std::unique_ptr<Facility> transportBeekeeperAtShed;
+inline Facility* transportBeekeeperAtShed;
 inline std::unique_ptr<Facility> transportBeekeeperAtHives;
 
 inline std::unique_ptr<Process> transportProcess;
 inline std::unique_ptr<Timer> hivesTimer;
 inline std::unique_ptr<Timer> shedTimer;
 
-inline uint stand = 0;
-inline uint shelf = 0;
+inline int stand = 0;
+inline int shelf = 0;
+inline int emptyShelf = 0;
 
 inline uint extractedHoney = 0;
 

@@ -4,7 +4,7 @@
 
 namespace BaseConstants {
     constexpr int FRAMES_PER_HIVE = 5;
-    constexpr int HIVES_TO_OPEN = 40;
+    constexpr int HIVES_TO_OPEN = 5;
     constexpr int TIME_TO_OPEN_HIVE = 15;
     constexpr int TIME_TO_TAKE_OUT_FRAME = 20;
     constexpr int TIME_FROM_STAND_TO_TRANSPORT = 2*20;

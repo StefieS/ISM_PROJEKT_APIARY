@@ -13,14 +13,25 @@ class LoadingFromShelfToExtractor : public Process {
 public:
     void Behavior() override;
     LoadingFromShelfToExtractor() {
+        this->Priority = 3;
         Activate();
     }
-}; 
+};
+
+class FromShelfToTransport : public Process {
+public:
+    void Behavior() override;
+    FromShelfToTransport() {
+        this->Priority = 4;
+        Activate();
+    }
+};
 
 class UnloadExtractor : public Process {
 public:
     void Behavior() override;
     UnloadExtractor() {
+        this->Priority = 3;
         Activate();
     }
 };
@@ -29,6 +40,7 @@ class GetAndLoadUncappedFrames : public Process {
 public:
     void Behavior() override;
     GetAndLoadUncappedFrames() {
+        this->Priority = 6;
         Activate();
     }
 };
@@ -37,6 +49,7 @@ class TakeBucketHoneyAway : public Process {
 public:
     void Behavior() override;
     TakeBucketHoneyAway() {
+        this->Priority = 5;
         Activate();
     }
 };

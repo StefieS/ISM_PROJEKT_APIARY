@@ -21,6 +21,7 @@ public:
     virtual bool transportWaitingForTransport(Location location) = 0;
 
     virtual int numberOfFramesInTransport() = 0;
+    virtual int capacity() = 0;
 
     virtual void loadIntoTransport(Entity* caller) = 0;
     virtual void unloadFromTransport() = 0;

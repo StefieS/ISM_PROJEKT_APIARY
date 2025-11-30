@@ -5,39 +5,45 @@
 using namespace BaseConstants;
 
 void TakeBucketHoneyAway::Behavior() {
+        Wait(0.01);
+
     vprint("TakeBucketHoneyAway activated", LogColor::ExtractorColor);
-    Seize(*shedBeekeeper, 4);
+    Seize(*shedBeekeeper);
     vprint("Taking bucket of honey away", LogColor::ExtractorColor);
     Wait(Uniform(BUCKET_TAKING_TIME - 5, BUCKET_TAKING_TIME + 5));
     extractedHoney -= BUCKET_CAPACITY;
     vprint("Bucket of honey taken away", LogColor::ExtractorColor);
+                Wait(0.01);
+
     Release(*shedBeekeeper);
 }
 
 // p 3
 void UnloadExtractor::Behavior() {
-    vprint("UnloadExtractor activated", LogColor::ExtractorColor);
-    Seize(*shedBeekeeper, 3);
-    vprint("UnloadExtractor started", LogColor::ExtractorColor);
+    Wait(0.01);
+    vprint("UnloadExtractor spawned", LogColor::ExtractorColor);
+    Seize(*shedBeekeeper);
+    vprint("UnloadExtractor seized", LogColor::ExtractorColor);
     Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
     extractor->unloadFromExtractor();
-    g_transport->loadIntoTransport(this);
-    vprint("Unloaded one frame from extractor", LogColor::ExtractorColor);
-    Release(*shedBeekeeper);
-    if (!extractor->isExtractorFree() && !extractor->isRunning() &&
-        g_transport->transportAvailableForLoad(Location::Shed)) {
-        vprint("Spawning new UnloadExtractor process recursively", LogColor::ExtractorColor);
-        new UnloadExtractor();
-    } else if (shelf && extractor->isExtractorFree() && !extractor->isRunning()) {
-        new LoadingFromShelfToExtractor();
+    if (!g_transport->transportAvailableForLoad(Location::Shed)) {
+        vprint("No transport available for unload, putting on shelf", LogColor::ExtractorColor);
+        emptyShelf++;
+    } else {
+        g_transport->loadIntoTransport(this);
     }
+    vprint("Unloaded one frame from extractor", LogColor::ExtractorColor);
+    Wait(0.01);
+    Release(*shedBeekeeper);
 }
 
 // p 2
 void LoadingFromShelfToExtractor::Behavior() {
+        Wait(0.01);
+
     // TODO: spawn when extractor available to load and shelf != 0
     vprint("LoadingFromShelfToExtractor activated", LogColor::ExtractorColor);
-    Seize(*shedBeekeeper, 2);
+    Seize(*shedBeekeeper);
     vprint("LoadingFromShelfToExtractor started", LogColor::ExtractorColor);
     Wait(Uniform(TIME_TO_PUT_FRAME - 2, TIME_TO_PUT_FRAME + 2));
 
@@ -45,16 +51,34 @@ void LoadingFromShelfToExtractor::Behavior() {
     extractor->loadIntoExtractor(this);
 
     vprint("LoadingFromShelfToExtractor completed", LogColor::ExtractorColor);
+                Wait(0.01);
+
     Release(*shedBeekeeper);
-    if (shelf && extractor->isExtractorFree()) {
-        new LoadingFromShelfToExtractor();
+    if (!extractor->isExtractorFree()) {
+        new ExtractorRunning();
     }
 }
 
-// p 0
-void GetAndLoadUncappedFrames::Behavior() {
+void FromShelfToTransport::Behavior() {
+
+    vprint("FromShelfToTransport spawned", LogColor::ExtractorColor);
     Seize(*shedBeekeeper);
-    vprint("GetAndLoadUncappedFrames activated", LogColor::ExtractorColor);
+    vprint("FromShelfToTransport started", LogColor::ExtractorColor);
+    Wait(Uniform(TIME_TO_PUT_FRAME - 2, TIME_TO_PUT_FRAME + 2));
+
+    emptyShelf--;
+    g_transport->loadIntoTransport(this);
+
+    vprint("FromShelfToTransport completed", LogColor::ExtractorColor);
+    Release(*shedBeekeeper);
+}
+
+void GetAndLoadUncappedFrames::Behavior() {
+        Wait(0.01);
+
+    vprint("GetAndLoadUncappedFrames spawned", LogColor::ExtractorColor);
+    Seize(*shedBeekeeper);
+    vprint("GetAndLoadUncappedFrames seized", LogColor::ExtractorColor);
     g_transport->unloadFromTransport();
     if (Random() <= PERC_LONG_UNCAPPING) {
         Wait(Normal(TIME_OF_LONG_UNCAPPING, 10));
@@ -66,25 +90,32 @@ void GetAndLoadUncappedFrames::Behavior() {
 
     if (extractor->isExtractorFree()) {
         extractor->loadIntoExtractor(this);
+                    Wait(0.01);
+
         Release(*shedBeekeeper);
+        if (!extractor->isExtractorFree()) {
+            new ExtractorRunning();
+        }
     } else {
         shelf++;
         vprint("shelf++");
+                    Wait(0.01);
+
         Release(*shedBeekeeper);
-        if (shelf && extractor->isExtractorFree()) {
-            new LoadingFromShelfToExtractor();
-        }
     }
 
 }
 
 void ExtractorRunning::Behavior() {
+        Wait(0.01);
+
     vprint("ExtractorRunning activated", LogColor::ExtractorColor);
     extractor->startRunning();
     again:
     Wait(TIME_OF_EXTRACTOR_RUNNING);
     vprint("Extractor finished running", LogColor::ExtractorColor);
     extractedHoney += HONEY_PER_EXTRACTOR_RUN;
+        Wait(0.01);
 
     if (extractedHoney >= BUCKET_CAPACITY) {
         new TakeBucketHoneyAway();
@@ -95,11 +126,15 @@ void ExtractorRunning::Behavior() {
         goto again;
     }
     extractor->stopRunning();
-    if (g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
-        new UnloadExtractor();
-    }
+        Wait(0.01);
 
-    if (shelf && extractor->isExtractorFree()) {
-        new LoadingFromShelfToExtractor();
+    if (g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isExtractorFree()) {
+        for (int i = 0; i < extractor->capacity(); i++) {
+            new UnloadExtractor();
+        }
+    } else if (!extractor->isExtractorFree()) {
+        for (int i = 0; i < extractor->capacity(); i++) {
+            new UnloadExtractor();
+        }
     }
 }

@@ -8,7 +8,9 @@ public:
           isFree(true), running(false) {}
     void loadIntoExtractor(Entity* caller);
     void unloadFromExtractor();
-
+    int capacity() {
+        return ExtractorS.Capacity();
+    }
     bool isExtractorFree();
     bool isRunning() {
         return running;

@@ -1,6 +1,6 @@
 #include "../../../inc/simlib_components/BaseComponents.hpp"
 #include "../../../inc/constants/BaseConstants.hpp"
-
+#include <algorithm>
 
 void TransportingFrames::Behavior() {
     if (this->location == Location::Hives) {
@@ -20,6 +20,7 @@ void TransportingFrames::Behavior() {
         }
 
         Location next;
+        vprint(std::to_string((int)this->location) +" Transporter going with " + std::to_string(g_transport->numberOfFramesInTransport()), LogColor::TransportColor);
 
         if (this->location == Location::Hives) {
             // todo correct priority
@@ -51,9 +52,9 @@ void TransportingFrames::Behavior() {
                 hivesTimer->setStop(false);
 
                 hivesTimer->Activate();
-        
-                if (stand && 
-                    g_transport->transportAvailableForLoad(Location::Hives)) {
+                        Wait(0.01);
+
+                for (int i = 0; i < std::min(g_transport->capacity(), stand); i++) {
                         new LoadingFromStandToTransport();
                 }
             }
@@ -62,9 +63,12 @@ void TransportingFrames::Behavior() {
             }
             hivesTimer->setStop(false);
         } else {
+                Wait(0.01);
+
             if (g_transport->numberOfFramesInTransport() == 0) {
                 vprint("No frames in transport to unload in shed", LogColor::TransportColor);
                 g_transport->setStatus(TransportStatus::ReadyToLoad);
+                        Wait(0.01);
 
                 if (!extractor->isExtractorFree() &&
                     g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
@@ -72,9 +76,19 @@ void TransportingFrames::Behavior() {
                     shedTimer->setRestart(true);
                     shedTimer->setStop(false);
                     shedTimer->Activate();
-                    new UnloadExtractor();
+                    // for (int i = 0; i < std::min(extractor->capacity(), g_transport->capacity()); i++) {
+                    //     new UnloadExtractor();
+                    // }
+                } else if (g_transport->transportAvailableForLoad(Location::Shed)) {
+                    shedTimer->setRestart(true);
+                    shedTimer->setStop(false);
+                    shedTimer->Activate();
+                    for (int i = 0; i < std::min(emptyShelf, g_transport->capacity()); i++) {
+                        new FromShelfToTransport();
+                    }
                 }
             }
+            vprint("Numebr of frames in transport: " + std::to_string(g_transport->numberOfFramesInTransport()), LogColor::TransportColor);
             for (int i = 0; i < g_transport->numberOfFramesInTransport(); i++) {
                 new GetAndLoadUncappedFrames();
             }
