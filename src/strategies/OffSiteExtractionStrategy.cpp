@@ -8,13 +8,6 @@ void OffSiteExtractionStrategy::run() {
     
     g_transport = std::make_unique<TransportGetter>(OffSiteConstants::TRANSPORT_CAPACITY);
 
-    hiveBeekeeper = std::make_unique<Facility>("Off hivesBeekeeper");
-    shedBeekeeper = new Facility("Off shedBeekeeper");
-
-    extractor = std::make_unique<Extractor>(BaseConstants::EXTRACTOR_CAPACITY);
-
-    transportBeekeeperAtHives = std::make_unique<Facility>("Transport beekeeper at hives");
-    
     transportBeekeeperAtShed = shedBeekeeper;
     
     transportProcess = std::make_unique<TransportingFrames>(Location::Hives, 

@@ -1,5 +1,4 @@
 #include "../../../inc/simlib_components/BaseComponents.hpp"
-#include "../../../inc/constants/BaseConstants.hpp"
 #include <algorithm>
 
 void TransportingFrames::Behavior() {
