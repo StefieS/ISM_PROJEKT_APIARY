@@ -5,11 +5,11 @@
 #include <memory>
 #include <unordered_map>
 
-#include "base_components/Transport.hpp"
+#include "base_components/TransportGetter.hpp"
 #include "base_components/Extractor.hpp"
 #include "base_components/BeeHivesProcess.hpp"
 #include "base_components/ExtractorProcess.hpp"
-#include "base_components/TransportProcess.hpp"
+#include "base_components/TransportingProcess.hpp"
 #include "../utils.hpp"
 
 
