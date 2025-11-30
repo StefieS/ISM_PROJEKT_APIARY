@@ -14,7 +14,7 @@ class LoadingFromStandToTransport : public Process {
 public:
     void Behavior() override;
     LoadingFromStandToTransport() {
-        this->Priority = 2;
+        this->Priority = 1;
         Activate();
     }
 };
@@ -23,7 +23,7 @@ class TakingOutFrames : public Process {
 public:
     void Behavior() override;
     TakingOutFrames() {
-        this->Priority = 1;
+        this->Priority = 2;
         Activate();
     }
 };

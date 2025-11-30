@@ -79,6 +79,7 @@ void GetAndLoadUncappedFrames::Behavior() {
     vprint("GetAndLoadUncappedFrames spawned", LogColor::ExtractorColor);
     Seize(*shedBeekeeper);
     vprint("GetAndLoadUncappedFrames seized", LogColor::ExtractorColor);
+    Wait(0.01);
     g_transport->unloadFromTransport();
     if (Random() <= PERC_LONG_UNCAPPING) {
         Wait(Normal(TIME_OF_LONG_UNCAPPING, 10));

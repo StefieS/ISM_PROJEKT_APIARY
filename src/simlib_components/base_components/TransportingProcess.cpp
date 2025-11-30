@@ -52,8 +52,7 @@ void TransportingFrames::Behavior() {
                 hivesTimer->setStop(false);
 
                 hivesTimer->Activate();
-                        Wait(0.01);
-
+                Wait(0.01);
                 for (int i = 0; i < std::min(g_transport->capacity(), stand); i++) {
                         new LoadingFromStandToTransport();
                 }
@@ -69,17 +68,7 @@ void TransportingFrames::Behavior() {
                 vprint("No frames in transport to unload in shed", LogColor::TransportColor);
                 g_transport->setStatus(TransportStatus::ReadyToLoad);
                         Wait(0.01);
-
-                if (!extractor->isExtractorFree() &&
-                    g_transport->transportAvailableForLoad(Location::Shed) && !extractor->isRunning())
-                {
-                    shedTimer->setRestart(true);
-                    shedTimer->setStop(false);
-                    shedTimer->Activate();
-                    // for (int i = 0; i < std::min(extractor->capacity(), g_transport->capacity()); i++) {
-                    //     new UnloadExtractor();
-                    // }
-                } else if (g_transport->transportAvailableForLoad(Location::Shed)) {
+             if (g_transport->transportAvailableForLoad(Location::Shed)) {
                     shedTimer->setRestart(true);
                     shedTimer->setStop(false);
                     shedTimer->Activate();

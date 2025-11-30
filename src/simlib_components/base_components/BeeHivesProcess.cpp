@@ -11,6 +11,7 @@ void ReturningEmptyFramesToHive::Behavior() {
         Seize(*hiveBeekeeper);
         Wait(Normal(TIME_TO_PUT_THE_FRAME_BACK, 2));
         vprint("Returned one frame to hive", LogColor::HivesColor);
+        Wait(0.01);
         g_transport->unloadFromTransport();
         vprint("ReturningEmptyFramesToHive completed", LogColor::HivesColor);
         returnedFrames++;
@@ -34,8 +35,14 @@ void LoadingFromStandToTransport::Behavior() {
         Seize(*hiveBeekeeper);
         vprint("LoadingFromStandToTransport started", LogColor::HivesColor);
         Wait(Uniform(TIME_FROM_STAND_TO_TRANSPORT - 5, TIME_FROM_STAND_TO_TRANSPORT + 5));
-
-        stand--;
+        if (g_transport->transportAvailableForLoad(Location::Hives)) {
+            stand--;
+        } else {
+            vprint("AAAAAA", LogColor::Default);
+            Release(*hiveBeekeeper);
+            return;
+        }
+        
         g_transport->loadIntoTransport(this);
         Wait(0.01);
         vprint("LoadingFromStandToTransport completed", LogColor::HivesColor);
