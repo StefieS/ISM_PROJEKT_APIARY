@@ -13,11 +13,12 @@ class LoadingFromShelfToExtractor : public Process {
 public:
     void Behavior() override;
     LoadingFromShelfToExtractor() {
-        this->Priority = 3;
+        this->Priority = 6;
         Activate();
     }
 };
 
+// needsto be gighet than 
 class FromShelfToTransport : public Process {
 public:
     void Behavior() override;
@@ -40,7 +41,7 @@ class GetAndLoadUncappedFrames : public Process {
 public:
     void Behavior() override;
     GetAndLoadUncappedFrames() {
-        this->Priority = 6;
+        this->Priority = 3;
         Activate();
     }
 };
