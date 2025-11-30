@@ -3,15 +3,17 @@
 
 #include "SimulationStrategy.hpp"
 #include "../constants/OnSiteConstants.hpp"
-#include "../simlib_components/OnSiteComponents.hpp"
-#include "../utils.hpp"
 
 class OnSiteExtractionStrategy : public SimulationStrategy {
 
 public:
+    OnSiteExtractionStrategy(bool separateTranportWorker)
+        : separateTranportWorker(separateTranportWorker) {}
 
     void run() override;
 
+private:
+    bool separateTranportWorker;
 };
 
 #endif // __ON_SITE_EXTRACTION_STRATEGY

@@ -1,7 +1,7 @@
 #ifndef __TRANSPORT_PROCESS
 #define __TRANSPORT_PROCESS
 #include <simlib.h>
-#include "./InterfaceTransport.hpp"
+#include "Transport.hpp"
 
 class TransportingFrames : public Process {
 public:

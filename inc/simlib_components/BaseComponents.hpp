@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "base_components/InterfaceTransport.hpp"
+#include "base_components/Transport.hpp"
 #include "base_components/Extractor.hpp"
 #include "base_components/BeeHivesProcess.hpp"
 #include "base_components/ExtractorProcess.hpp"
@@ -13,7 +13,7 @@
 #include "../utils.hpp"
 
 
-inline std::unique_ptr<ITransportGetter> g_transport;
+inline std::unique_ptr<TransportGetter> g_transport;
 inline std::unique_ptr<Extractor> extractor;
 inline std::unique_ptr<Facility> hiveBeekeeper;
 inline Facility* shedBeekeeper;

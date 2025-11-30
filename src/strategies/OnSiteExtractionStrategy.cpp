@@ -1,11 +1,10 @@
 #include "../../inc/strategies/OnSiteExtractionStrategy.hpp"
-#define SEPARATE_TRANSPORT_WORKER true
 void OnSiteExtractionStrategy::run() {
     RandomSeed(time(NULL));
 
     Init(0, 10*60*60); // 3 hour simulation
     
-    g_transport = std::make_unique<OneTrolleyGetter>(OnSiteConstants::TRANSPORT_CAPACITY);
+    g_transport = std::make_unique<TransportGetter>(OnSiteConstants::TRANSPORT_CAPACITY);
 
     hiveBeekeeper = std::make_unique<Facility>("On hivesBeekeeper");
     shedBeekeeper = new Facility("On shedBeekeeper");
@@ -13,7 +12,7 @@ void OnSiteExtractionStrategy::run() {
     extractor = std::make_unique<Extractor>(BaseConstants::EXTRACTOR_CAPACITY);
 
     transportBeekeeperAtHives = std::make_unique<Facility>("Transport beekeeper at hives");
-    if (SEPARATE_TRANSPORT_WORKER) {
+    if (separateTranportWorker) {
         transportBeekeeperAtShed = new Facility("Transport beekeeper at shed");
     } else {
         transportBeekeeperAtShed = shedBeekeeper;  // Same person

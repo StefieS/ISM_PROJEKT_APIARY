@@ -1,19 +1,20 @@
-#include "../../inc/simlib_components/OnSiteComponents.hpp"
+#include "../../../inc/simlib_components/BaseComponents.hpp"
 #include <algorithm>
-bool OneTrolleyGetter::transportAvailableForLoad(Location location) {
+
+bool TransportGetter::transportAvailableForLoad(Location location) {
     return (this->location == location) && (status == TransportStatus::ReadyToLoad);
 }
 
-bool OneTrolleyGetter::transportAvailableForUnload(Location location) {
+bool TransportGetter::transportAvailableForUnload(Location location) {
     return (this->location == location) && (status == TransportStatus::ReadyToUnload);
 }
 
-bool OneTrolleyGetter::transportWaitingForTransport(Location location) {
+bool TransportGetter::transportWaitingForTransport(Location location) {
     return (this->location == location) && (status == TransportStatus::WaitingForTransport);
 }
  
-void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
-    vprint("Enter in onetrolleygetter", LogColor::Default);
+void TransportGetter::loadIntoTransport(Entity* caller) {
+    vprint("Enter in TransportGetter", LogColor::Default);
     Trolley.Enter(caller, 1);
 
     if (this->Trolley.Full()) {
@@ -31,8 +32,8 @@ void OneTrolleyGetter::loadIntoTransport(Entity* caller) {
 
 }
 
-void OneTrolleyGetter::unloadFromTransport() {
-    vprint("Leave in onetrolleygetter", LogColor::Default);
+void TransportGetter::unloadFromTransport() {
+    vprint("Leave in TransportGetter", LogColor::Default);
     Trolley.Leave(1);
     if (this->Trolley.Empty()) {
         vprint("Trolley empty after unload", LogColor::Default);
@@ -55,7 +56,7 @@ void OneTrolleyGetter::unloadFromTransport() {
 
 }
 
-void OneTrolleyGetter::moveToLocation(Location l) {
+void TransportGetter::moveToLocation(Location l) {
     location = l;
     status = TransportStatus::ReadyToUnload;
 }
