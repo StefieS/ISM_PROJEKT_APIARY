@@ -12,10 +12,12 @@ void TakeBucketHoneyAway::Behavior() {
     Wait(Uniform(BUCKET_TAKING_TIME - 5, BUCKET_TAKING_TIME + 5));
     extractedHoney -= BUCKET_CAPACITY;
     vprint("Bucket of honey taken away", LogColor::ExtractorColor);
-                Wait(0.01);
-
+    Wait(0.01);
+    currentStrategy->onBucketReady();
     Release(*shedBeekeeper);
 }
+
+
 
 // p 3
 void UnloadExtractor::Behavior() {
@@ -137,4 +139,30 @@ void ExtractorRunning::Behavior() {
             new UnloadExtractor();
         }
     }
+}
+
+void StrainingBucketOnSite::Behavior() {
+    vprint("Bucket ready - waiting for all hives to finish", LogColor::ExtractorColor);
+    
+    bucketsWaitingToStrain.Insert(this);
+    Passivate();
+    
+    vprint("All hives done - starting straining", LogColor::ExtractorColor);
+    Wait(STRAINING_TIME);
+    vprint("Bucket strained", LogColor::ExtractorColor);
+}
+
+void StrainingBucketOffSite::Behavior() {
+    vprint("Starting straining immediately", LogColor::ExtractorColor);
+    Wait(STRAINING_TIME);
+    vprint("Bucket strained", LogColor::ExtractorColor);
+}
+
+void CleanExtractor::Behavior() {
+    vprint("Cleaning extractor started", LogColor::ExtractorColor);
+    Seize(*shedBeekeeper);
+    int timeToClean = currentStrategy->CleaningTime + (extractor->capacity() * 60);
+    Wait(Uniform(timeToClean - 5*60, timeToClean + 5*60));
+    vprint("Cleaning extractor completed", LogColor::ExtractorColor);
+    Release(*shedBeekeeper);
 }

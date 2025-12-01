@@ -17,7 +17,12 @@ void OnSiteExtractionStrategy::run() {
 
     hivesTimer =std::make_unique<Timer>(OnSiteConstants::HIVES_TIMEOUT_TIME, 0);
     shedTimer = std::make_unique<Timer>(OnSiteConstants::SHED_TIMEOUT_TIME, 1);
-
+    this->CleaningTime = OnSiteConstants::CLEANING_TIME;
+    currentStrategy = this;
     BEEHIVES_PROCESSES();
     Run();
+}
+
+void OnSiteExtractionStrategy::onBucketReady() {
+    (new StrainingBucketOnSite())->Activate();
 }

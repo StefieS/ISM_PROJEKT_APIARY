@@ -11,6 +11,8 @@ public:
         : separateTranportWorker(separateTranportWorker) {}
 
     void run() override;
+    void onBucketReady() override;
+
 
 private:
     bool separateTranportWorker;

@@ -7,13 +7,16 @@
 #include "../simlib_components/BaseComponents.hpp"
 #include <memory>
 // Description: Abstract interface for simulation strategies.
+class SimulationStrategy;
+inline SimulationStrategy* currentStrategy;
+
 class SimulationStrategy {
     
 public:
     virtual ~SimulationStrategy() = default;
-
+    virtual void onBucketReady() = 0;
     virtual void run() = 0;
-    
+    int CleaningTime;
 };
 
 #define BEEHIVES_PROCESSES() do { \

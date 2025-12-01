@@ -23,6 +23,8 @@ namespace BaseConstants {
 
     constexpr int TIME_OF_LONG_UNCAPPING = 1*60;
     constexpr int TIME_OF_SHORT_UNCAPPING = 20;
+
+    constexpr int STRAINING_TIME = 30*60;
 };
 
 #endif // __BASE_CONSTANTS

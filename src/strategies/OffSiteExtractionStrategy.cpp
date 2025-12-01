@@ -15,8 +15,15 @@ void OffSiteExtractionStrategy::run() {
 
     hivesTimer =std::make_unique<Timer>(OffSiteConstants::HIVES_TIMEOUT_TIME, 0);
     shedTimer = std::make_unique<Timer>(OffSiteConstants::SHED_TIMEOUT_TIME, 1);
-
+    this->CleaningTime = OffSiteConstants::CLEANING_TIME;
+    currentStrategy = this;
     BEEHIVES_PROCESSES();
     Run();
     
+}
+
+// OffSiteExtractionStrategy.cpp
+void OffSiteExtractionStrategy::onBucketReady() {
+    // Off-site: start straining immediately
+    (new StrainingBucketOffSite())->Activate();
 }

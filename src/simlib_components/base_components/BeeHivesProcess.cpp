@@ -21,6 +21,11 @@ void ReturningEmptyFramesToHive::Behavior() {
             hivesTimer->setRestart(false);
             shedTimer->setStop(true);
             shedTimer->setRestart(false);
+            while (!bucketsWaitingToStrain.Empty()) {
+                Entity* p = bucketsWaitingToStrain.GetFirst();
+                p->Activate();
+            }
+            new CleanExtractor();
         }
         Release(*hiveBeekeeper);
 
@@ -29,7 +34,6 @@ void ReturningEmptyFramesToHive::Behavior() {
 void LoadingFromStandToTransport::Behavior() {
         Wait(0.01);
 
-        // TODO: spawn when hives available to load and stand != 0
         vprint("LoadingFromStandToTransport activated", LogColor::HivesColor);
         Seize(*hiveBeekeeper);
         vprint("LoadingFromStandToTransport started", LogColor::HivesColor);

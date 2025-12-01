@@ -8,6 +8,7 @@ class OffSiteExtractionStrategy : public SimulationStrategy {
 
 public:
     void run() override;
+    void onBucketReady() override;
 
 };
 

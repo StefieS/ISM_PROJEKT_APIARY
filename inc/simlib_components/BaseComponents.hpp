@@ -11,6 +11,7 @@
 #include "base_components/BeeHivesProcess.hpp"
 #include "base_components/ExtractorProcess.hpp"
 #include "base_components/TransportingProcess.hpp"
+#include "../strategies/SimulationStrategy.hpp"
 #include "../utils.hpp"
 
 
@@ -22,10 +23,12 @@ inline Facility* shedBeekeeper = new Facility("On shedBeekeeper");;
 inline std::unique_ptr<Facility> transportBeekeeperAtHives = std::make_unique<Facility>("Transport beekeeper at hives");;
 inline Facility* transportBeekeeperAtShed;
 
+inline Queue bucketsWaitingToStrain;
+
 inline std::unique_ptr<TransportGetter> g_transport;
 inline std::unique_ptr<Process> transportProcess;
 inline std::unique_ptr<Timer> hivesTimer;
-inline std::unique_ptr<Timer> shedTimer;
+inline std::unique_ptr<Timer> shedTimer;    
 
 inline int stand = 0;
 inline int shelf = 0;

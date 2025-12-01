@@ -55,4 +55,29 @@ public:
     }
 };
 
+class CleanExtractor : public Process {
+public:
+    void Behavior() override;
+    CleanExtractor() {
+        Activate();
+    }
+};
+
+class StrainingBucketOnSite : public Process {
+public:
+    void Behavior() override;
+    StrainingBucketOnSite() {
+        Activate();
+    }
+};
+
+class StrainingBucketOffSite : public Process {
+public:
+    void Behavior() override;
+    StrainingBucketOffSite() {
+        Activate();
+    }
+};
+
+
 #endif // __EXTRACTOR_PROCESS
