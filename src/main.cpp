@@ -30,8 +30,15 @@ bool parseBool(const std::string& s, bool& out) {
 int main(int argc, char* argv[]) {
 
     if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <on|off> [true|false]\n";
+        std::cerr << "Usage: " << argv[0] << " <on|off> [true|false] [-v]\n";
+        std::cerr << "  -v: Enable verbose output\n";
         return 1;
+    }
+    for (int i = 1; i < argc; i++) {
+        if (std::string(argv[i]) == "-v") {
+            globalVerbose = true;
+            break;
+        }
     }
 
     std::string strategyName = lower(argv[1]);
@@ -58,6 +65,10 @@ int main(int argc, char* argv[]) {
     else {
         std::cerr << "Unknown strategy: '" << strategyName << "'\n";
         return 1;
+    }
+
+    if (globalVerbose) {
+        std::cout << "Verbose mode enabled\n";
     }
 
     sim.run();

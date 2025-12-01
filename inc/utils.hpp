@@ -21,7 +21,7 @@ enum class LogColor {
  * @param msg The message to print.
  */
 inline void vprint(const std::string& msg, LogColor color = LogColor::Default) {
-    if (!true) return;  // your condition
+    if (!globalVerbose) return;  // your condition
     
     const char* code = "";
 
