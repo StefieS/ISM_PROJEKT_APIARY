@@ -47,8 +47,6 @@ void UnloadExtractor::Behavior() {
 // p 2
 void LoadingFromShelfToExtractor::Behavior() {
         Wait(0.01);
-
-    // TODO: spawn when extractor available to load and shelf != 0
     vprint("LoadingFromShelfToExtractor activated", LogColor::ExtractorColor);
     Seize(*shedBeekeeper);
     vprint("LoadingFromShelfToExtractor started", LogColor::ExtractorColor);

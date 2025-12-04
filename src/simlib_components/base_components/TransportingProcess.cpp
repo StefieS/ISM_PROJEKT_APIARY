@@ -5,7 +5,6 @@ void TransportingFrames::Behavior() {
     double t0 = 0;
     double t1 = 0;
     if (this->location == Location::Hives) {
-        // todo correct priority
         Seize(*transportBeekeeperAtShed); // he starts at hives, make unavailable at shed
         vprint("Transporter starting at Hives, seizing transporter beekeeper at shed", LogColor::TransportColor);
     } else {
@@ -28,7 +27,6 @@ void TransportingFrames::Behavior() {
         vprint(std::to_string((int)this->location) +" Transporter going with " + std::to_string(g_transport->numberOfFramesInTransport()), LogColor::TransportColor);
 
         if (this->location == Location::Hives) {
-            // todo correct priority
             hivesTimer->setRestart(false);
             hivesTimer->setStop(true);
             Seize(*transportBeekeeperAtHives);
