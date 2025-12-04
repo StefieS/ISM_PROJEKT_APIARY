@@ -9,6 +9,7 @@ void ReturningEmptyFramesToHive::Behavior() {
         vprint("ReturningEmptyFramesToHive activated", LogColor::HivesColor);
         Seize(*hiveBeekeeper);
         Wait(Normal(TIME_TO_PUT_THE_FRAME_BACK, 2));
+    
         vprint("Returned one frame to hive", LogColor::HivesColor);
         Wait(0.01);
         g_transport->unloadFromTransport();
@@ -33,6 +34,7 @@ void ReturningEmptyFramesToHive::Behavior() {
 
 void LoadingFromStandToTransport::Behavior() {
         Wait(0.01);
+        double t0 = Time; // start timer for transport loading
 
         vprint("LoadingFromStandToTransport activated", LogColor::HivesColor);
         Seize(*hiveBeekeeper);
@@ -47,6 +49,9 @@ void LoadingFromStandToTransport::Behavior() {
         }
         
         g_transport->loadIntoTransport(this);
+
+        stat_frameToTransportTime(Time - t0); // record time to transport
+
         Wait(0.01);
         vprint("LoadingFromStandToTransport completed", LogColor::HivesColor);
         Release(*hiveBeekeeper);
@@ -54,15 +59,18 @@ void LoadingFromStandToTransport::Behavior() {
 }
 
 void TakingOutFrames::Behavior() {
-        Wait(0.01);
+    Wait(0.01);
+    double t0 = Time; // timing frame removal
 
     vprint("TakingOutFrames spawned", LogColor::HivesColor);
     Seize(*hiveBeekeeper);
     vprint("TakingOutFrames started", LogColor::HivesColor);
     Wait(Normal(TIME_TO_TAKE_OUT_FRAME, 1));
     vprint("Took out 1 frame ", LogColor::HivesColor);
-        Wait(0.01);
 
+    stat_frameRemovalTime(Time - t0); // record frame removal time
+
+    Wait(0.01);
     if (g_transport->transportAvailableForLoad(Location::Hives)) {
         g_transport->loadIntoTransport(this);
         vprint("Loaded frame into transport", LogColor::HivesColor);
@@ -71,16 +79,20 @@ void TakingOutFrames::Behavior() {
         stand++;
         vprint("No transport available, placing frame on stand", LogColor::HivesColor);
     }
-
     Release(*hiveBeekeeper);
     vprint("TakingOutFrames completed", LogColor::HivesColor);
 }
 
 void OpeningHive::Behavior() {
+    double t0 = Time; // start timer for hive open time
+
     vprint("OpeningHive activated", LogColor::HivesColor);
     Seize(*hiveBeekeeper);
     vprint("OpeningHive started", LogColor::HivesColor);
     Wait(Uniform(TIME_TO_OPEN_HIVE - 5, TIME_TO_OPEN_HIVE + 5));
+
+    stat_hiveOpenTime(Time - t0);  // record hive open duration
+
     vprint("Hive opened", LogColor::HivesColor);
     for (int i = 0; i < FRAMES_PER_HIVE; i++) {
         new TakingOutFrames();

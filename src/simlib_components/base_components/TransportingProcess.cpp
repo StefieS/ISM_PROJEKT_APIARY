@@ -2,13 +2,17 @@
 #include <algorithm>
 
 void TransportingFrames::Behavior() {
+    double t0 = 0;
+    double t1 = 0;
     if (this->location == Location::Hives) {
         // todo correct priority
         Seize(*transportBeekeeperAtShed); // he starts at hives, make unavailable at shed
         vprint("Transporter starting at Hives, seizing transporter beekeeper at shed", LogColor::TransportColor);
+        t0 = Time;
     } else {
         Seize(*transportBeekeeperAtHives);
         vprint("Transporter starting at Shed, seizing transporter beekeeper at hives", LogColor::TransportColor);
+        t1 = Time;
     }
 
     while (true) {
@@ -87,9 +91,11 @@ void TransportingFrames::Behavior() {
             // todo correct priority
             vprint("Transporter releasing hives beekeeper", LogColor::TransportColor);
             Release(*transportBeekeeperAtHives);
+            h_transportWaitHives(Time - t0);
         } else {
             vprint("Transporter releasing shed beekeeper", LogColor::TransportColor);
             Release(*transportBeekeeperAtShed);
+            h_transportWaitShed(Time - t1);
         }
         
     }

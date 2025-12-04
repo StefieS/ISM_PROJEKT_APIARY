@@ -21,6 +21,7 @@ void OnSiteExtractionStrategy::run() {
     currentStrategy = this;
     BEEHIVES_PROCESSES();
     Run();
+    //REPORT();
 }
 
 void OnSiteExtractionStrategy::onBucketReady() {

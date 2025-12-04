@@ -26,5 +26,16 @@ public:
     } \
 } while(0)
 
+#define REPORT() do { \
+    stat_hiveOpenTime.Output(); \
+    stat_frameRemovalTime.Output(); \
+    stat_frameToTransportTime.Output(); \
+    stat_waitToEnterExtractor.Output(); \
+    stat_extractorRunningTime.Output(); \
+    stat_waitToUnloadExtractor.Output(); \
+    h_transportWaitHives.Output(); \
+    h_transportWaitShed.Output(); \
+} while(0)
+
 
 #endif // __SIMULATION_STRATEGY

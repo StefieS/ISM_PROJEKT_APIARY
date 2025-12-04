@@ -22,6 +22,8 @@ void TakeBucketHoneyAway::Behavior() {
 // p 3
 void UnloadExtractor::Behavior() {
     Wait(0.01);
+    double t0 = Time; // waiting to unload extractor
+
     vprint("UnloadExtractor spawned", LogColor::ExtractorColor);
     Seize(*shedBeekeeper);
     vprint("UnloadExtractor seized", LogColor::ExtractorColor);
@@ -33,6 +35,9 @@ void UnloadExtractor::Behavior() {
     } else {
         g_transport->loadIntoTransport(this);
     }
+    
+    stat_waitToUnloadExtractor(Time - t0); // record time waited to unload
+
     vprint("Unloaded one frame from extractor", LogColor::ExtractorColor);
     Wait(0.01);
     Release(*shedBeekeeper);
@@ -109,15 +114,19 @@ void GetAndLoadUncappedFrames::Behavior() {
 }
 
 void ExtractorRunning::Behavior() {
-        Wait(0.01);
+    Wait(0.01);
+    double t0 = Time; // start of extractor run
 
     vprint("ExtractorRunning activated", LogColor::ExtractorColor);
     extractor->startRunning();
     again:
     Wait(TIME_OF_EXTRACTOR_RUNNING);
+
+    stat_extractorRunningTime(Time - t0); // record running time
+
     vprint("Extractor finished running", LogColor::ExtractorColor);
     extractedHoney += HONEY_PER_EXTRACTOR_RUN;
-        Wait(0.01);
+    Wait(0.01);
 
     if (extractedHoney >= BUCKET_CAPACITY) {
         new TakeBucketHoneyAway();
