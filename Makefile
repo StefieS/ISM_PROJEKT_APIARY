@@ -19,7 +19,7 @@ OBJS = $(SRCS_NO_MAIN:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 TARGET = simulation
 
-.PHONY: all clean purge zip
+.PHONY: all run clean purge zip
 
 all: $(TARGET)
 
@@ -30,6 +30,20 @@ $(TARGET): $(OBJS) $(MAIN)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+	
+run: all
+	@echo "Running: on true"
+	./$(TARGET) on true
+	@echo
+
+	@echo "Running: on false"
+	./$(TARGET) on false
+	@echo
+
+	@echo "Running: off"
+	./$(TARGET) off
+	@echo
+
 
 clean:
 	rm -rf $(BUILD_DIR)
