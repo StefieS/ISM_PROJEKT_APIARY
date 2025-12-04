@@ -38,4 +38,4 @@ purge: clean
 	rm -f $(TARGET)
 
 zip:
-	zip -r xlesigm00.zip src inc Makefile LICENSE README.md
+	zip -r 02_xlesigm00_xnovakf00.zip src inc figs Makefile LICENSE README.md
