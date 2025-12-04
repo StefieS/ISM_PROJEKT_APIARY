@@ -22,10 +22,11 @@ void TakeBucketHoneyAway::Behavior() {
 // p 3
 void UnloadExtractor::Behavior() {
     Wait(0.01);
-    double t0 = Time; // waiting to unload extractor
 
     vprint("UnloadExtractor spawned", LogColor::ExtractorColor);
     Seize(*shedBeekeeper);
+    double t0 = Time; // waiting to unload extractor
+
     vprint("UnloadExtractor seized", LogColor::ExtractorColor);
     Wait(Uniform(TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR - 2, TIME_TO_UNLOAD_FRAME_FROM_EXTRACTOR + 2));
     extractor->unloadFromExtractor();

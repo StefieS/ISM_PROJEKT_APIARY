@@ -7,7 +7,7 @@ void OnSiteExtractionStrategy::run() {
     g_transport = std::make_unique<TransportGetter>(OnSiteConstants::TRANSPORT_CAPACITY);
 
     if (separateTranportWorker) {
-        transportBeekeeperAtShed = new Facility("Transport beekeeper at shed");
+        transportBeekeeperAtShed = std::make_shared<Facility>("Transport beekeeper at shed");
     } else {
         transportBeekeeperAtShed = shedBeekeeper;  // Same person
     }

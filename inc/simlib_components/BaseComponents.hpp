@@ -17,11 +17,11 @@
 
 inline std::unique_ptr<Extractor> extractor = std::make_unique<Extractor>(BaseConstants::EXTRACTOR_CAPACITY);
 
-inline std::unique_ptr<Facility> hiveBeekeeper = std::make_unique<Facility>("hivesBeekeeper");
-inline Facility* shedBeekeeper = new Facility("On shedBeekeeper");
+inline std::shared_ptr<Facility> hiveBeekeeper = std::make_unique<Facility>("hivesBeekeeper");
+inline std::shared_ptr<Facility> shedBeekeeper = std::make_shared<Facility>("On shedBeekeeper");
 
 inline std::unique_ptr<Facility> transportBeekeeperAtHives = std::make_unique<Facility>("Transport beekeeper at hives");
-inline Facility* transportBeekeeperAtShed;
+inline std::shared_ptr<Facility> transportBeekeeperAtShed;
 
 inline Queue bucketsWaitingToStrain;
 

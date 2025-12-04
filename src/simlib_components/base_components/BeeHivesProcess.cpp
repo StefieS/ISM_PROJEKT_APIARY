@@ -41,10 +41,10 @@ void ReturningEmptyFramesToHive::Behavior() {
 
 void LoadingFromStandToTransport::Behavior() {
         Wait(0.01);
-        double t0 = Time; // start timer for transport loading
 
         vprint("LoadingFromStandToTransport activated", LogColor::HivesColor);
         Seize(*hiveBeekeeper);
+        double t0 = Time; // start timer for transport loading
         vprint("LoadingFromStandToTransport started", LogColor::HivesColor);
         Wait(Uniform(TIME_FROM_STAND_TO_TRANSPORT - 5, TIME_FROM_STAND_TO_TRANSPORT + 5));
         if (g_transport->transportAvailableForLoad(Location::Hives)) {
@@ -67,10 +67,10 @@ void LoadingFromStandToTransport::Behavior() {
 
 void TakingOutFrames::Behavior() {
     Wait(0.01);
-    double t0 = Time; // timing frame removal
 
     vprint("TakingOutFrames spawned", LogColor::HivesColor);
     Seize(*hiveBeekeeper);
+    double t0 = Time; // timing frame removal
     vprint("TakingOutFrames started", LogColor::HivesColor);
     Wait(Normal(TIME_TO_TAKE_OUT_FRAME, 1));
     vprint("Took out 1 frame ", LogColor::HivesColor);
@@ -91,10 +91,9 @@ void TakingOutFrames::Behavior() {
 }
 
 void OpeningHive::Behavior() {
-    double t0 = Time; // start timer for hive open time
-
     vprint("OpeningHive activated", LogColor::HivesColor);
     Seize(*hiveBeekeeper);
+    double t0 = Time; // start timer for hive open time
     vprint("OpeningHive started", LogColor::HivesColor);
     Wait(Uniform(TIME_TO_OPEN_HIVE - 5, TIME_TO_OPEN_HIVE + 5));
 

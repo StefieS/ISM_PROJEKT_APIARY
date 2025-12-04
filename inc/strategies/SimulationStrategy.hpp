@@ -35,6 +35,8 @@ public:
     stat_waitToUnloadExtractor.Output(); \
     h_transportWaitHives.Output(); \
     h_transportWaitShed.Output(); \
+    shedBeekeeper->Output(); \
+    hiveBeekeeper->Output(); \
 } while(0)
 
 
