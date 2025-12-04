@@ -11,6 +11,9 @@ public:
     int capacity() {
         return ExtractorS.Capacity();
     }
+    int filled() {
+        return ExtractorS.Free();
+    }
     bool isExtractorFree();
     bool isRunning() {
         return running;

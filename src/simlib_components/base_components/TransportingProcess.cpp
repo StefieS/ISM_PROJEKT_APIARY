@@ -69,8 +69,10 @@ void TransportingFrames::Behavior() {
 
             if (g_transport->numberOfFramesInTransport() == 0) {
                 vprint("No frames in transport to unload in shed", LogColor::TransportColor);
+            if (!(returnedFrames == BaseConstants::HIVES_TO_OPEN * BaseConstants::FRAMES_PER_HIVE)) {
                 g_transport->setStatus(TransportStatus::ReadyToLoad);
                         Wait(0.01);
+            }
              if (g_transport->transportAvailableForLoad(Location::Shed)) {
                     shedTimer->setRestart(true);
                     shedTimer->setStop(false);
@@ -84,7 +86,6 @@ void TransportingFrames::Behavior() {
             for (int i = 0; i < g_transport->numberOfFramesInTransport(); i++) {
                 new GetAndLoadUncappedFrames();
             }
-            shedTimer->setStop(false);
         }
 
         if (this->location == Location::Hives) {

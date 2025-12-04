@@ -2,7 +2,7 @@
 void OnSiteExtractionStrategy::run() {
     RandomSeed(time(NULL));
 
-    Init(0, 10*60*60); // 3 hour simulation
+    Init(0, 10*60*60);
     
     g_transport = std::make_unique<TransportGetter>(OnSiteConstants::TRANSPORT_CAPACITY);
 

@@ -170,8 +170,7 @@ void StrainingBucketOffSite::Behavior() {
 void CleanExtractor::Behavior() {
     vprint("Cleaning extractor started", LogColor::ExtractorColor);
     Seize(*shedBeekeeper);
-    int timeToClean = currentStrategy->CleaningTime + (extractor->capacity() * 60);
-    Wait(Uniform(timeToClean - 5*60, timeToClean + 5*60));
+    Wait(Uniform(currentStrategy->CleaningTime - 5*60, currentStrategy->CleaningTime + 5*60));
     vprint("Cleaning extractor completed", LogColor::ExtractorColor);
     Release(*shedBeekeeper);
 }

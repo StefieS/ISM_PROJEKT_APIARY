@@ -1,6 +1,10 @@
 #include "../../../inc/simlib_components/BaseComponents.hpp"
 #include "../../../inc/utils.hpp"
 
+namespace BaseConstants {
+    int HIVES_TO_OPEN = 40;  // default value
+}
+
 using namespace BaseConstants;
 
 void ReturningEmptyFramesToHive::Behavior() {
@@ -26,6 +30,9 @@ void ReturningEmptyFramesToHive::Behavior() {
                 Entity* p = bucketsWaitingToStrain.GetFirst();
                 p->Activate();
             }
+            g_transport->setStatus(TransportStatus::WaitingForTransport);
+            transportProcess->Activate();
+            shedTimer->setStop(true);
             new CleanExtractor();
         }
         Release(*hiveBeekeeper);
