@@ -8,17 +8,19 @@ void TransportingFrames::Behavior() {
         // todo correct priority
         Seize(*transportBeekeeperAtShed); // he starts at hives, make unavailable at shed
         vprint("Transporter starting at Hives, seizing transporter beekeeper at shed", LogColor::TransportColor);
-        t0 = Time;
     } else {
         Seize(*transportBeekeeperAtHives);
         vprint("Transporter starting at Shed, seizing transporter beekeeper at hives", LogColor::TransportColor);
-        t1 = Time;
     }
 
     while (true) {
         if (!g_transport->transportWaitingForTransport(this->location)) {
+            if (this->location == Location::Hives) h_transportWaitHives(Time - t0);
+            else h_transportWaitShed(Time - t1);
             vprint("No transport waiting at location, passivating transporter", LogColor::TransportColor);
             Passivate();
+            if (this->location == Location::Hives) t0 = Time;
+            else t1 = Time;
             continue;
         }
 
@@ -89,14 +91,11 @@ void TransportingFrames::Behavior() {
         }
 
         if (this->location == Location::Hives) {
-            // todo correct priority
             vprint("Transporter releasing hives beekeeper", LogColor::TransportColor);
             Release(*transportBeekeeperAtHives);
-            h_transportWaitHives(Time - t0);
         } else {
             vprint("Transporter releasing shed beekeeper", LogColor::TransportColor);
             Release(*transportBeekeeperAtShed);
-            h_transportWaitShed(Time - t1);
         }
         
     }

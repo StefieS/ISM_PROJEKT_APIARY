@@ -52,6 +52,6 @@ inline Stat stat_waitShedBeekeeper("Beekeeper Wait at Shed");
 inline Stat stat_waitTransportBeekeeperHives("Transport Worker Wait at Hives");
 inline Stat stat_waitTransportBeekeeperShed("Transport Worker Wait at Shed");
 
-inline Histogram h_transportWaitHives("Transport Wait at Hives", 0, 500, 50);
-inline Histogram h_transportWaitShed("Transport Wait at Shed", 0, 500, 50);
+inline Histogram h_transportWaitHives("Transport Wait at Hives", 0, 100, 15);
+inline Histogram h_transportWaitShed("Transport Wait at Shed", 0, 100, 15);
 #endif // __BASE_COMPONENTS
