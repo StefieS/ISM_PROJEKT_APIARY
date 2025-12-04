@@ -19,7 +19,7 @@ void OffSiteExtractionStrategy::run() {
     currentStrategy = this;
     BEEHIVES_PROCESSES();
     Run();
-    //REPORT();
+    REPORT();
 }
 
 // OffSiteExtractionStrategy.cpp
