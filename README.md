@@ -245,6 +245,8 @@ This is an academic project. For questions or suggestions, please open an issue 
 
 For inquiries about this project, please contact the authors through their university emails or create an issue on GitHub.
 
+## Evaluation
+20/20
 ---
 
 **Note**: This project was created as part of the IMS (Modeling and Simulation) course curriculum.
