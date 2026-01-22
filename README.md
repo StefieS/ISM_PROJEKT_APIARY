@@ -1,4 +1,4 @@
-# ISM_PROJEKT_APIARY
+# IMS_PROJEKT_APIARY
 
 > Discrete event simulation of an apiary to compare the effectiveness of onsite versus offsite honey extraction methods.
 
